@@ -1,14 +1,15 @@
-package ir.maktab.data.repository.BuildingDecoration;
+package ir.maktab.data.repository.buildingDecoration;
 
 import ir.maktab.data.entity.BuildingDecoration.BuildingDecoration;
-import ir.maktab.data.entity.BuildingDecoration.SubBuildingDecoration;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class BuildingDecorationRepositoryImpl implements BuildingDecorationRepository{
     private final SessionFactory sessionFactory;
 
@@ -52,7 +53,7 @@ public class BuildingDecorationRepositoryImpl implements BuildingDecorationRepos
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         List<BuildingDecoration> list =
-                (List<BuildingDecoration>) session.createQuery("from ir.maktab.data.entity.BuildingDecoration").list();
+                (List<BuildingDecoration>) session.createQuery("from ir.maktab.data.entity.BuildingDecoration.BuildingDecoration").list();
         tx.commit();
         session.close();
         return list;
@@ -62,7 +63,7 @@ public class BuildingDecorationRepositoryImpl implements BuildingDecorationRepos
     public void delete(Integer id) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        session.createQuery("delete from ir.maktab.data.entity.BuildingDecoration as c  where c.id = :c_id")
+        session.createQuery("delete from ir.maktab.data.entity.BuildingDecoration.BuildingDecoration as c  where c.id = :c_id")
                 .setParameter("c_id",id).executeUpdate();
         tx.commit();
         session.close();

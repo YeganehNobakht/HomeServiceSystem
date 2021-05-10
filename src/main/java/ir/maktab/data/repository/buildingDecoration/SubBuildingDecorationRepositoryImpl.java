@@ -1,6 +1,5 @@
-package ir.maktab.data.repository.BuildingDecoration;
+package ir.maktab.data.repository.buildingDecoration;
 
-import ir.maktab.data.entity.BuildingDecoration.BuildingDecoration;
 import ir.maktab.data.entity.BuildingDecoration.SubBuildingDecoration;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -40,7 +39,7 @@ public class SubBuildingDecorationRepositoryImpl implements SubBuildingDecoratio
     public Optional<SubBuildingDecoration> get(Integer id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.BuildingDecoration as c  where c.id = :c_id")
+        javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.BuildingDecoration.SubBuildingDecoration as c  where c.id = :c_id")
                 .setParameter("c_id",id);
         Optional f =  query.getResultList().stream().findFirst();
         transaction.commit();
@@ -53,7 +52,7 @@ public class SubBuildingDecorationRepositoryImpl implements SubBuildingDecoratio
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         List<SubBuildingDecoration> list =
-                (List<SubBuildingDecoration>) session.createQuery("from ir.maktab.data.entity.BuildingDecoration").list();
+                (List<SubBuildingDecoration>) session.createQuery("from ir.maktab.data.entity.BuildingDecoration.SubBuildingDecoration").list();
         tx.commit();
         session.close();
         return list;
@@ -63,7 +62,7 @@ public class SubBuildingDecorationRepositoryImpl implements SubBuildingDecoratio
     public void delete(Integer id) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        session.createQuery("delete from ir.maktab.data.entity.BuildingDecoration as c  where c.id = :c_id")
+        session.createQuery("delete from ir.maktab.data.entity.BuildingDecoration.SubBuildingDecoration as c  where c.id = :c_id")
                 .setParameter("c_id",id).executeUpdate();
         tx.commit();
         session.close();
