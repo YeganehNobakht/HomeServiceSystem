@@ -10,6 +10,7 @@ public class SubHomeAppliances {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double price;
+    private String name;
     private String comment;
     @ManyToOne
     @JoinColumn(name="home_appliances", nullable=false)
@@ -18,9 +19,10 @@ public class SubHomeAppliances {
     public SubHomeAppliances() {
     }
 
-    public SubHomeAppliances(Integer id, Double price, String comment, HomeAppliances homeAppliances) {
+    public SubHomeAppliances(Integer id, Double price, String name, String comment, HomeAppliances homeAppliances) {
         this.id = id;
         this.price = price;
+        this.name = name;
         this.comment = comment;
         this.homeAppliances = homeAppliances;
     }
@@ -40,6 +42,15 @@ public class SubHomeAppliances {
 
     public SubHomeAppliances setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubHomeAppliances setName(String name) {
+        this.name = name;
         return this;
     }
 

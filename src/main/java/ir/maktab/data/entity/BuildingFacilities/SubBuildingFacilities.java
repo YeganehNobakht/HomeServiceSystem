@@ -12,6 +12,7 @@ public class SubBuildingFacilities {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double price;
+    private String name;
     private String comment;
     @ManyToOne
     @JoinColumn(name="building_facilities", nullable=false)
@@ -20,9 +21,10 @@ public class SubBuildingFacilities {
     public SubBuildingFacilities() {
     }
 
-    public SubBuildingFacilities(Integer id, Double price, String comment, BuildingFacilities buildingFacilities) {
+    public SubBuildingFacilities(Integer id, Double price, String name, String comment, BuildingFacilities buildingFacilities) {
         this.id = id;
         this.price = price;
+        this.name = name;
         this.comment = comment;
         this.buildingFacilities = buildingFacilities;
     }
@@ -42,6 +44,15 @@ public class SubBuildingFacilities {
 
     public SubBuildingFacilities setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubBuildingFacilities setName(String name) {
+        this.name = name;
         return this;
     }
 

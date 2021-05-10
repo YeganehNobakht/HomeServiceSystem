@@ -10,6 +10,7 @@ public class SubVehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double price;
+    private String name;
     private String comment;
     @ManyToOne
     @JoinColumn(name="vehicles", nullable=false)
@@ -18,9 +19,10 @@ public class SubVehicle {
     public SubVehicle() {
     }
 
-    public SubVehicle(Integer id, Double price, String comment, Vehicles vehicles) {
+    public SubVehicle(Integer id, Double price, String name, String comment, Vehicles vehicles) {
         this.id = id;
         this.price = price;
+        this.name = name;
         this.comment = comment;
         this.vehicles = vehicles;
     }
@@ -40,6 +42,15 @@ public class SubVehicle {
 
     public SubVehicle setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubVehicle setName(String name) {
+        this.name = name;
         return this;
     }
 

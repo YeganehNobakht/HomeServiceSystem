@@ -10,6 +10,7 @@ public class SubMoving {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double price;
+    private String name;
     private String comment;
     @ManyToOne
     @JoinColumn(name="move_furniture", nullable=false)
@@ -18,9 +19,10 @@ public class SubMoving {
     public SubMoving() {
     }
 
-    public SubMoving(Integer id, Double price, String comment, Moving moving) {
+    public SubMoving(Integer id, Double price, String name, String comment, Moving moving) {
         this.id = id;
         this.price = price;
+        this.name = name;
         this.comment = comment;
         this.moving = moving;
     }
@@ -40,6 +42,15 @@ public class SubMoving {
 
     public SubMoving setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubMoving setName(String name) {
+        this.name = name;
         return this;
     }
 

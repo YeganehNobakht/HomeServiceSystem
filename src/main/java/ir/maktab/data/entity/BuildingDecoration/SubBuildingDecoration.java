@@ -9,14 +9,16 @@ public class SubBuildingDecoration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double price;
+    private String name;
     private String comment;
     @ManyToOne
     @JoinColumn(name="building_decoration", nullable=false)
     private BuildingDecoration buildingDecoration;
 
-    public SubBuildingDecoration(Integer id, Double price, String comment, BuildingDecoration buildingDecoration) {
+    public SubBuildingDecoration(Integer id, Double price, String name, String comment, BuildingDecoration buildingDecoration) {
         this.id = id;
         this.price = price;
+        this.name = name;
         this.comment = comment;
         this.buildingDecoration = buildingDecoration;
     }
@@ -39,6 +41,15 @@ public class SubBuildingDecoration {
 
     public SubBuildingDecoration setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubBuildingDecoration setName(String name) {
+        this.name = name;
         return this;
     }
 

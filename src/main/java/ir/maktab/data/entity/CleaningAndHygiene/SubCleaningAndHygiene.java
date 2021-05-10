@@ -10,14 +10,16 @@ public class SubCleaningAndHygiene {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double price;
+    private String name;
     private String comment;
     @ManyToOne
     @JoinColumn(name="cleaning", nullable=false)
     private CleaningAndHygiene cleaningAndHygiene;
 
-    public SubCleaningAndHygiene(Integer id, Double price, String comment, CleaningAndHygiene cleaningAndHygiene) {
+    public SubCleaningAndHygiene(Integer id, Double price, String name, String comment, CleaningAndHygiene cleaningAndHygiene) {
         this.id = id;
         this.price = price;
+        this.name = name;
         this.comment = comment;
         this.cleaningAndHygiene = cleaningAndHygiene;
     }
@@ -37,6 +39,15 @@ public class SubCleaningAndHygiene {
 
     public SubCleaningAndHygiene setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SubCleaningAndHygiene setName(String name) {
+        this.name = name;
         return this;
     }
 
