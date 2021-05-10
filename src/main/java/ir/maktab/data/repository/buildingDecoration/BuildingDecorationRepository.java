@@ -1,7 +1,6 @@
-package ir.maktab.data.repository.BuildingDecoration;
+package ir.maktab.data.repository.buildingDecoration;
 
 import ir.maktab.data.entity.BuildingDecoration.BuildingDecoration;
-import ir.maktab.data.entity.BuildingDecoration.SubBuildingDecoration;
 
 import java.util.List;
 import java.util.Optional;

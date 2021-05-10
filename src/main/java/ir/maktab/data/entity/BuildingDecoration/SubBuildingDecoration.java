@@ -15,12 +15,11 @@ public class SubBuildingDecoration {
     @JoinColumn(name="building_decoration", nullable=false)
     private BuildingDecoration buildingDecoration;
 
-    public SubBuildingDecoration(Integer id, Double price, String name, String comment, BuildingDecoration buildingDecoration) {
-        this.id = id;
+    public SubBuildingDecoration( String name,Double price, String comment) {
+
         this.price = price;
         this.name = name;
         this.comment = comment;
-        this.buildingDecoration = buildingDecoration;
     }
 
     public SubBuildingDecoration setId(Integer id) {
