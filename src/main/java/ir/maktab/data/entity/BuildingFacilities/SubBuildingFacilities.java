@@ -14,7 +14,7 @@ public class SubBuildingFacilities {
     private Double price;
     private String comment;
     @ManyToOne
-    @JoinColumn(name="building_decoration", nullable=false)
+    @JoinColumn(name="building_facilities", nullable=false)
     private BuildingFacilities buildingFacilities;
 
     public SubBuildingFacilities() {
