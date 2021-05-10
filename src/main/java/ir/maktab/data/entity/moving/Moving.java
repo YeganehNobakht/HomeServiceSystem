@@ -12,7 +12,7 @@ public class Moving {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(orphanRemoval = true,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "buildingFacilities")
+    @OneToMany(orphanRemoval = true,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "moving")
     private final List<SubMoving> subMovingList = new ArrayList<>();
 
     public Integer getId() {
