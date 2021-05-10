@@ -21,6 +21,11 @@ public class SubBuildingDecoration {
         this.buildingDecoration = buildingDecoration;
     }
 
+    public SubBuildingDecoration setId(Integer id) {
+        this.id = id;
+        return this;
+    }
+
     public SubBuildingDecoration() {
     }
 

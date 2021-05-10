@@ -20,4 +20,9 @@ public class BuildingDecoration {
     public List<SubBuildingDecoration> getSubBuildingDecorationList() {
         return subBuildingDecorationList;
     }
+
+    public BuildingDecoration setId(Integer id) {
+        this.id = id;
+        return this;
+    }
 }
