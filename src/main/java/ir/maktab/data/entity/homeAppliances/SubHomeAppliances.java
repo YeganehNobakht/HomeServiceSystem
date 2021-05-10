@@ -19,12 +19,10 @@ public class SubHomeAppliances {
     public SubHomeAppliances() {
     }
 
-    public SubHomeAppliances(Integer id, Double price, String name, String comment, HomeAppliances homeAppliances) {
-        this.id = id;
+    public SubHomeAppliances( String name,Double price, String comment) {
         this.price = price;
         this.name = name;
         this.comment = comment;
-        this.homeAppliances = homeAppliances;
     }
 
     public Integer getId() {
