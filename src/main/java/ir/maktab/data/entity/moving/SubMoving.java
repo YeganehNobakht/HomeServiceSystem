@@ -19,12 +19,10 @@ public class SubMoving {
     public SubMoving() {
     }
 
-    public SubMoving(Integer id, Double price, String name, String comment, Moving moving) {
-        this.id = id;
+    public SubMoving(  String name,Double price, String comment) {
         this.price = price;
         this.name = name;
         this.comment = comment;
-        this.moving = moving;
     }
 
     public Integer getId() {

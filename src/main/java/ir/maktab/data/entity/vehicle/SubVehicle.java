@@ -19,12 +19,10 @@ public class SubVehicle {
     public SubVehicle() {
     }
 
-    public SubVehicle(Integer id, Double price, String name, String comment, Vehicles vehicles) {
-        this.id = id;
+    public SubVehicle( String name, Double price, String comment) {
         this.price = price;
         this.name = name;
         this.comment = comment;
-        this.vehicles = vehicles;
     }
 
     public Integer getId() {
