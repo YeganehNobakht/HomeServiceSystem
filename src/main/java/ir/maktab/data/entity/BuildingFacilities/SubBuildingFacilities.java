@@ -2,8 +2,6 @@ package ir.maktab.data.entity.BuildingFacilities;
 
 import javax.persistence.Entity;
 
-import ir.maktab.data.entity.BuildingDecoration.BuildingDecoration;
-
 import javax.persistence.*;
 
 @Entity
@@ -21,12 +19,10 @@ public class SubBuildingFacilities {
     public SubBuildingFacilities() {
     }
 
-    public SubBuildingFacilities(Integer id, Double price, String name, String comment, BuildingFacilities buildingFacilities) {
-        this.id = id;
+    public SubBuildingFacilities( String name,  Double price, String comment) {
         this.price = price;
         this.name = name;
         this.comment = comment;
-        this.buildingFacilities = buildingFacilities;
     }
 
     public Integer getId() {
