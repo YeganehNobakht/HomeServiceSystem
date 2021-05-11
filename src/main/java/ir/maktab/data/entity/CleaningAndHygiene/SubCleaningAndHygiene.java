@@ -16,12 +16,10 @@ public class SubCleaningAndHygiene {
     @JoinColumn(name="cleaning", nullable=false)
     private CleaningAndHygiene cleaningAndHygiene;
 
-    public SubCleaningAndHygiene(Integer id, Double price, String name, String comment, CleaningAndHygiene cleaningAndHygiene) {
-        this.id = id;
+    public SubCleaningAndHygiene( String name,Double price, String comment) {
         this.price = price;
         this.name = name;
         this.comment = comment;
-        this.cleaningAndHygiene = cleaningAndHygiene;
     }
 
     public Integer getId() {
