@@ -27,7 +27,7 @@ public class SubCleaningAndHygieneInitializer {
         Properties prop = new Properties();
 
         try {
-            prop.load(new FileInputStream("src/main/resources/vehicle.properties"));
+            prop.load(new FileInputStream("src/main/resources/CleaningAndHygiene.properties"));
             //add data if database is empty.
             if (subVehicleRepository.getAll().isEmpty()){
                 for (Object key : prop.keySet()) {
