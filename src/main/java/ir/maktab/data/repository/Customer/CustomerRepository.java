@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface CustomerRepository {
     void create(Customer customer);
     void update(Customer customer);
-    Optional<Customer> get(Integer id);
+    Optional<Customer> get(String  id);
     List<Customer> getAll();
-    void delete(Integer integer);
+    void delete(String integer);
 }

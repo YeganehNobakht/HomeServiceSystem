@@ -38,7 +38,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Optional<Customer> get(Integer id) {
+    public Optional<Customer> get(String id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.Customer as c  where c.username = :c_id")
@@ -61,7 +61,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(String id) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         session.createQuery("delete from ir.maktab.data.entity.Customer as c  where c.uesrname = :c_id")
