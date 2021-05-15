@@ -1,5 +1,5 @@
 package ir.maktab.data.entity;
 
-public enum  Status {
+public enum UserStatus {
     NEW,WAITING,APPROVE;
 }
