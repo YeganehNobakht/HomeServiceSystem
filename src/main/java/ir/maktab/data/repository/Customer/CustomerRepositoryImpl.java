@@ -41,7 +41,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public Optional<Customer> get(Integer id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.Customer as c  where c.id = :c_id")
+        javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.Customer as c  where c.username = :c_id")
                 .setParameter("c_id",id);
         Optional f =  query.getResultList().stream().findFirst();
         transaction.commit();
@@ -64,7 +64,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public void delete(Integer id) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        session.createQuery("delete from ir.maktab.data.entity.Customer as c  where c.id = :c_id")
+        session.createQuery("delete from ir.maktab.data.entity.Customer as c  where c.uesrname = :c_id")
                 .setParameter("c_id",id).executeUpdate();
         tx.commit();
         session.close();
