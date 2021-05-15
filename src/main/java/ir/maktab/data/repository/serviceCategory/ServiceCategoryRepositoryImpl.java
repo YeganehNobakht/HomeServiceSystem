@@ -50,6 +50,18 @@ public class ServiceCategoryRepositoryImpl implements ServiceCategoryRepository 
     }
 
     @Override
+    public Optional<ServiceCategory> getByName(String name) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.ServiceCategory as c  where c.name = :c_name")
+                .setParameter("c_name",name);
+        Optional f =  query.getResultList().stream().findFirst();
+        transaction.commit();
+        session.close();
+        return f;
+    }
+
+    @Override
     public List<ServiceCategory> getAll() {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();

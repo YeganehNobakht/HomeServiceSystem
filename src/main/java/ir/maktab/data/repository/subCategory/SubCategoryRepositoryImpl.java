@@ -50,6 +50,18 @@ public class SubCategoryRepositoryImpl implements SubCategoryRepository {
     }
 
     @Override
+    public Optional<SubCategory> getByName(String name) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.SubCategory as c  where c.name = :c_name")
+                .setParameter("c_name",name);
+        Optional f =  query.getResultList().stream().findFirst();
+        transaction.commit();
+        session.close();
+        return f;
+    }
+
+    @Override
     public List<SubCategory> getAll() {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();

@@ -10,6 +10,7 @@ public interface SubCategoryRepository {
     void create(SubCategory subCategory);
     void update(SubCategory subCategory);
     Optional<SubCategory> get(Integer id);
+    Optional<SubCategory> getByName(String name);
     List<SubCategory> getAll();
     void delete(Integer integer);
 }

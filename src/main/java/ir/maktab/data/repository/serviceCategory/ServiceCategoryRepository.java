@@ -10,6 +10,7 @@ public interface ServiceCategoryRepository {
     void create(ServiceCategory serviceCategory);
     void update(ServiceCategory serviceCategory);
     Optional<ServiceCategory> get(Integer id);
+    Optional<ServiceCategory> getByName(String name);
     List<ServiceCategory> getAll();
     void delete(Integer integer);
 }
