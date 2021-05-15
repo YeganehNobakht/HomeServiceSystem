@@ -16,6 +16,10 @@ public class ServiceCategory {
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
     private List<SubCategory> subCategoryList = new ArrayList<>();
 
+    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
+    private List<CustomerOrder> customerOrderList = new ArrayList<>();
+
+
 
     public Integer getId() {
         return id;
@@ -39,4 +43,17 @@ public class ServiceCategory {
         return subCategoryList;
     }
 
+    public ServiceCategory setSubCategoryList(List<SubCategory> subCategoryList) {
+        this.subCategoryList = subCategoryList;
+        return this;
+    }
+
+    public List<CustomerOrder> getCustomerOrderList() {
+        return customerOrderList;
+    }
+
+    public ServiceCategory setCustomerOrderList(List<CustomerOrder> customerOrderList) {
+        this.customerOrderList = customerOrderList;
+        return this;
+    }
 }

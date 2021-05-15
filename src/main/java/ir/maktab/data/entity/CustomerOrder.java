@@ -9,6 +9,14 @@ public class CustomerOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name="category", nullable=false , foreignKey = @ForeignKey(name = "category_order_fk"))
+    private ServiceCategory serviceCategory;
+
+    @ManyToOne
+    @JoinColumn(name="subcategory", nullable=false , foreignKey = @ForeignKey(name = "subcategory_order_fk"))
+    private SubCategory subCategory;
+
     @Column(columnDefinition="varchar(100)")
     private String jobDescription;
 
@@ -100,6 +108,24 @@ public class CustomerOrder {
 
     public CustomerOrder setSpecialist(Specialist specialist) {
         this.specialist = specialist;
+        return this;
+    }
+
+    public ServiceCategory getServiceCategory() {
+        return serviceCategory;
+    }
+
+    public CustomerOrder setServiceCategory(ServiceCategory serviceCategory) {
+        this.serviceCategory = serviceCategory;
+        return this;
+    }
+
+    public SubCategory getSubCategory() {
+        return subCategory;
+    }
+
+    public CustomerOrder setSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
         return this;
     }
 }
