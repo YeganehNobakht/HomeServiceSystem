@@ -1,5 +1,7 @@
 package ir.maktab.data.entity;
 
+import ir.maktab.data.entity.enums.UserStatus;
+
 import javax.persistence.*;
 import java.util.Date;
 

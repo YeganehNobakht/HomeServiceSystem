@@ -1,4 +1,4 @@
-package ir.maktab.data.entity;
+package ir.maktab.data.entity.enums;
 
 public enum OrderStatus {
     WAITING_FOR_SPECIALIST_OFFER,
