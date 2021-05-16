@@ -10,11 +10,12 @@ import java.util.List;
 public class Customer extends User {
 
 
-    @Enumerated
-    private OrderStatus orderStatus;
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer", fetch = FetchType.EAGER)
     private final List<CustomerOrder> customerOrderList = new ArrayList<>();
+
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer", fetch = FetchType.EAGER)
+    private final List<CustomerComment> customerCommentList = new ArrayList<>();
 
     public Customer(String username, String password, String fullName) {
         super(username, password, fullName);
@@ -27,12 +28,7 @@ public class Customer extends User {
         return customerOrderList;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public Customer setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-        return this;
+    public List<CustomerComment> getCustomerCommentList() {
+        return customerCommentList;
     }
 }

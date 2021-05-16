@@ -1,5 +1,7 @@
 package ir.maktab.data.entity;
 
+import ir.maktab.data.entity.enums.OrderStatus;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,6 +10,9 @@ public class CustomerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Enumerated
+    private OrderStatus orderStatus;
 
     @ManyToOne
     @JoinColumn(name="category", nullable=false , foreignKey = @ForeignKey(name = "category_order_fk"))
@@ -45,6 +50,15 @@ public class CustomerOrder {
 
     public CustomerOrder setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public CustomerOrder setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
         return this;
     }
 

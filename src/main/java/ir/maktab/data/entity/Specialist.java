@@ -17,6 +17,9 @@ public class Specialist extends User{
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
 
+    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
+    private List<CustomerComment> customerCommentList = new ArrayList<>();
+
 
    //constructor
     public Specialist(String username, String password, String fullName) {
@@ -43,4 +46,11 @@ public class Specialist extends User{
     public List<CustomerOrder> getCustomerOrderList() {
         return customerOrderList;
     }
+
+
+    public List<CustomerComment> getCustomerCommentList() {
+        return customerCommentList;
+    }
+
+
 }
