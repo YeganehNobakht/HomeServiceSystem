@@ -61,7 +61,7 @@ public class SpecialistRepositoryImpl implements SpecialistRepository {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(String  id) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         session.createQuery("delete from ir.maktab.data.entity.Specialist as c  where c.username = :c_id")

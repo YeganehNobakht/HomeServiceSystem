@@ -11,5 +11,5 @@ public interface SpecialistRepository {
     void update(Specialist specialist);
     Optional<Specialist> get(Integer id);
     List<Specialist> getAll();
-    void delete(Integer integer);
+    void delete(String  username);
 }
