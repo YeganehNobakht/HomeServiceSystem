@@ -117,9 +117,12 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.getPassword().equals(oldPassword)) {
             if (validations.validatePassword(newPassword))
                 customer.setPassword(newPassword);
-            else
-                throw new Exception("Password is too weak");
         }
 
+    }
+
+    @Override
+    public void create(Customer customer) {
+        customerRepository.create(customer);
     }
 }

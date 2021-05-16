@@ -9,4 +9,6 @@ public interface CustomerService {
     void addOrder(Customer customer) throws Exception;
 
     void changePassword(Customer customer) throws Exception;
+
+    void create(Customer customer);
 }
