@@ -9,13 +9,15 @@ public class ServiceCategoryMapper {
                 .setId(serviceCategoryDto.getId())
                 .setName(serviceCategoryDto.getName())
                 .setSubCategoryList(serviceCategoryDto.getSubCategoryList())
-                .setCustomerOrderList(serviceCategoryDto.getCustomerOrderList());
+                .setCustomerOrderList(serviceCategoryDto.getCustomerOrderList())
+                .setSpecialistList(serviceCategoryDto.getSpecialistList());
     }
     public ServiceCategoryDto toServiceCategoryDto(ServiceCategory serviceCategory){
         return new ServiceCategoryDto()
                 .setId(serviceCategory.getId())
                 .setName(serviceCategory.getName())
                 .setSubCategoryList(serviceCategory.getSubCategoryList())
-                .setCustomerOrderList(serviceCategory.getCustomerOrderList());
+                .setCustomerOrderList(serviceCategory.getCustomerOrderList())
+                .setSpecialistList(serviceCategory.getSpecialistList());
     }
 }
