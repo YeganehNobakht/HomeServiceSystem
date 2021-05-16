@@ -1,6 +1,7 @@
 package ir.maktab.dto;
 
 import ir.maktab.data.entity.CustomerOrder;
+import ir.maktab.data.entity.Specialist;
 import ir.maktab.data.entity.SubCategory;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class ServiceCategoryDto {
     private List<SubCategory> subCategoryList = new ArrayList<>();
 
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
+
+    private List<Specialist> specialistList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -50,6 +53,15 @@ public class ServiceCategoryDto {
 
     public ServiceCategoryDto setCustomerOrderList(List<CustomerOrder> customerOrderList) {
         this.customerOrderList = customerOrderList;
+        return this;
+    }
+
+    public List<Specialist> getSpecialistList() {
+        return specialistList;
+    }
+
+    public ServiceCategoryDto setSpecialistList(List<Specialist> specialistList) {
+        this.specialistList = specialistList;
         return this;
     }
 }
