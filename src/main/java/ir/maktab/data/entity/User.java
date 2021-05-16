@@ -25,10 +25,11 @@ public class User {
 
     private Double Balance;
 
-    public User(String username, String password, String fullName) {
+    public User(String username, String password, String fullName, String email) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+        this.email = email;
     }
 
     public User() {

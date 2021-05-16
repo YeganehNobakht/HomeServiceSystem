@@ -22,8 +22,10 @@ public class Specialist extends User{
 
 
    //constructor
-    public Specialist(String username, String password, String fullName) {
-        super(username, password, fullName);
+
+
+    public Specialist(String username, String password, String fullName, String email) {
+        super(username, password, fullName, email);
     }
 
     public Specialist(){

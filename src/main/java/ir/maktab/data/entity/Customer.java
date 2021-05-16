@@ -17,8 +17,9 @@ public class Customer extends User {
     @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer", fetch = FetchType.EAGER)
     private final List<CustomerComment> customerCommentList = new ArrayList<>();
 
-    public Customer(String username, String password, String fullName) {
-        super(username, password, fullName);
+
+    public Customer(String username, String password, String fullName, String email) {
+        super(username, password, fullName, email);
     }
 
     public Customer() {
