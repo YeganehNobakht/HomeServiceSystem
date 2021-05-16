@@ -19,7 +19,12 @@ public class ServiceCategory {
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
 
+    @ManyToMany
+    private List<Specialist> specialistList = new ArrayList<>();
 
+    public List<Specialist> getSpecialistList() {
+        return specialistList;
+    }
 
     public Integer getId() {
         return id;

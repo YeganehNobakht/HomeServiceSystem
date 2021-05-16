@@ -11,7 +11,7 @@ public class Specialist extends User{
     @Basic(fetch = FetchType.LAZY)
     private byte[] profilePicture;
 
-    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
+    @ManyToMany
     private List<ServiceCategory> serviceCategoryList = new ArrayList<>();
 
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
