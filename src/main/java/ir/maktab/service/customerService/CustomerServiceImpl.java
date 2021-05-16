@@ -1,10 +1,12 @@
 package ir.maktab.service.customerService;
 
 import ir.maktab.data.entity.*;
+import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.repository.Customer.CustomerRepository;
 import ir.maktab.service.customerOrderService.CustomerOrderService;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.subCategoryService.SubCategoryService;
+import ir.maktab.service.validations.Validations;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -20,32 +22,45 @@ public class CustomerServiceImpl implements CustomerService {
     private final ServiceCategoryService serviceCategoryService;
     private final SubCategoryService subCategoryService;
     private final CustomerOrderService customerOrderService;
+    private final Validations validations;
 
     public CustomerServiceImpl(CustomerRepository customerRepository, Scanner scanner,
                                ServiceCategoryService serviceCategoryService,
                                SubCategoryService subCategoryService,
-                               CustomerOrderService customerOrderService) {
+                               CustomerOrderService customerOrderService,
+                               Validations validations) {
         this.customerRepository = customerRepository;
         this.scanner = scanner;
         this.serviceCategoryService = serviceCategoryService;
         this.subCategoryService = subCategoryService;
         this.customerOrderService = customerOrderService;
+        this.validations = validations;
     }
 
     @Override
-    public void customerSignIn() throws Exception {
+    public Customer customerSignIn() throws Exception {
         System.out.println("Username");
         String username = scanner.next();
         System.out.println("Password");
         String password = scanner.next();
         Customer customer = fetchCustomerByUsername(username);
         if (customer.getPassword().equals(password)){
-            System.out.println("Select a service");
-            showServices();
-            registerOrder(customer);
+            System.out.println("You are successfully sign in");
+            return customer;
         }
+        else
+            throw new Exception("Incorrect password");
 
     }
+
+    @Override
+    public void addOrder(Customer customer) throws Exception {
+        System.out.println("Select a service");
+        showServices();
+        registerOrder(customer);
+    }
+
+
 
     private Customer fetchCustomerByUsername(String username) throws Exception {
         Optional<Customer> customer = customerRepository.get(username);
@@ -88,7 +103,23 @@ public class CustomerServiceImpl implements CustomerService {
                             .setOrderDate(new Date())
                             .setAddress(address)
                             .setServiceCategory(serviceCategory)
-                            .setSubCategory(subCategory);
+                            .setSubCategory(subCategory)
+                            .setOrderStatus(OrderStatus.WAITING_FOR_SPECIALIST_OFFER);
         customerOrderService.create(customerOrder);
+    }
+
+    @Override
+    public void changePassword(Customer customer) throws Exception {
+        System.out.println("Enter old password:");
+        Object oldPassword = scanner.next();
+        System.out.println("Enter new password:");
+        String newPassword = scanner.next();
+        if (customer.getPassword().equals(oldPassword)) {
+            if (validations.validatePassword(newPassword))
+                customer.setPassword(newPassword);
+            else
+                throw new Exception("Password is too weak");
+        }
+
     }
 }
