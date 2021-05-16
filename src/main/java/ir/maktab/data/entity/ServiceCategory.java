@@ -26,6 +26,11 @@ public class ServiceCategory {
         return specialistList;
     }
 
+    public ServiceCategory setSpecialistList(List<Specialist> specialistList) {
+        this.specialistList = specialistList;
+        return this;
+    }
+
     public Integer getId() {
         return id;
     }
