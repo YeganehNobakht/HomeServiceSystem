@@ -1,5 +1,5 @@
 package ir.maktab.service.applicationService;
 
 public interface ApplicationService {
-    void runApplication();
+    void runApplication() throws Exception;
 }
