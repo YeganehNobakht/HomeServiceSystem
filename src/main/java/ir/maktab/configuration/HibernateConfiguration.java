@@ -13,11 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Properties;
 import java.util.Scanner;
 
-@Configuration
-@ComponentScan(basePackages = {"ir.maktab"})
-public class Config {
+public class HibernateConfiguration {
 
-    //TODO:: separate config classes
 
     @Bean("sessionFactory")
     public SessionFactory getSessionFactory(){
@@ -46,10 +43,5 @@ public class Config {
         }
         return null;
     }
-    @Bean("scanner")
-    public Scanner scanner(){
-        return new Scanner(System.in);
-    }
-
 }
 
