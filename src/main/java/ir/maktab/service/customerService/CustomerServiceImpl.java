@@ -115,8 +115,10 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.println("Enter new password:");
         String newPassword = scanner.next();
         if (customer.getPassword().equals(oldPassword)) {
-            if (validations.validatePassword(newPassword))
+            if (validations.validatePassword(newPassword)) {
                 customer.setPassword(newPassword);
+                customerRepository.update(customer);
+            }
         }
 
     }
