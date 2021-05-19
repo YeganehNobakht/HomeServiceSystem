@@ -1,14 +1,16 @@
 package ir.maktab.service.validations;
 
+import org.springframework.stereotype.Service;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
+@Service
 public class validationsImpl implements Validations{
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private static final Pattern VALID_PASSWORD_REGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$");
-    private static final Pattern VALID_FULL_NAME_REGEX =  Pattern.compile("^[a-zA-Z\\s]+");
+    private static final Pattern VALID_NAME_REGEX =  Pattern.compile("^[A-Za-z]\\w{5,29}$");
     private static final Pattern VALID_USERNAME_REGEX =  Pattern.compile("[a-zA-Z0-9\\._\\-]{3,}");
 
 
@@ -30,7 +32,7 @@ public class validationsImpl implements Validations{
     }
     @Override
     public boolean validateName(String name) throws Exception {
-        Matcher matcher = VALID_FULL_NAME_REGEX.matcher(name);
+        Matcher matcher = VALID_NAME_REGEX.matcher(name);
         if (matcher.matches())
             return true;
         else
