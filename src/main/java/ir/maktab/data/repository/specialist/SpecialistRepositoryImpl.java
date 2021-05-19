@@ -1,14 +1,19 @@
 package ir.maktab.data.repository.specialist;
 
-import ir.maktab.data.entity.Customer;
 import ir.maktab.data.entity.Specialist;
+import ir.maktab.dto.SpecialistDto;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class SpecialistRepositoryImpl implements SpecialistRepository {
 
 
@@ -38,7 +43,7 @@ public class SpecialistRepositoryImpl implements SpecialistRepository {
     }
 
     @Override
-    public Optional<Specialist> get(Integer id) {
+    public Optional<Specialist> get(String id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         javax.persistence.Query query  = session.createQuery("from ir.maktab.data.entity.Specialist as c  where c.uername = :c_id")
@@ -69,5 +74,29 @@ public class SpecialistRepositoryImpl implements SpecialistRepository {
         tx.commit();
         session.close();
 
+    }
+
+    @Override
+    public List<SpecialistDto> filterSpecialist(SpecialistDto specialistDto) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Specialist.class);
+        //criteria.createAlias("s.serviceCategoryList")
+
+
+        //if it is work... if didnt work->filter the result list in service according to speciality.
+        if (specialistDto.getSpecialty()!=null)
+            criteria.add(Restrictions.in(specialistDto.getSpecialty(),"s.serviceCategoryList"));
+        if (specialistDto.getName()!=null)
+            criteria.add(Restrictions.eq("s.name",specialistDto.getName()));
+        if (specialistDto.getLastName()!=null)
+            criteria.add(Restrictions.eq("s.lastName",specialistDto.getLastName()));
+        if (specialistDto.getEmail()!=null)
+            criteria.add(Restrictions.eq("s.email",specialistDto.getEmail()));
+        criteria.setResultTransformer(Transformers.aliasToBean(SpecialistDto.class));
+        List list = criteria.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 }
