@@ -1,14 +1,16 @@
 package ir.maktab.data.repository.manager;
 
-import ir.maktab.data.entity.Customer;
+
 import ir.maktab.data.entity.Manager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ManagerRepositoryImpl implements ManagerRepository {
 
 

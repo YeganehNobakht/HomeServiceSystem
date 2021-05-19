@@ -1,14 +1,15 @@
 package ir.maktab.data.repository.customerOrder;
 
-import ir.maktab.data.entity.Customer;
 import ir.maktab.data.entity.CustomerOrder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
 
 
