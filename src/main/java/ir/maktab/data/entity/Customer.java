@@ -14,7 +14,7 @@ public class Customer extends User {
     @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer", fetch = FetchType.EAGER)
     private final List<CustomerOrder> customerOrderList = new ArrayList<>();
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer")
     private final List<CustomerComment> customerCommentList = new ArrayList<>();
 
 

@@ -12,7 +12,9 @@ public class User {
 
     private String password;
 
-    private String fullName;
+    private String name;
+
+    private String lastName;
 
     @Column(unique = true)
     private String email;
@@ -25,10 +27,11 @@ public class User {
 
     private Double Balance;
 
-    public User(String username, String password, String fullName, String email) {
+    public User(String username, String password, String name, String lastName, String email) {
         this.username = username;
         this.password = password;
-        this.fullName = fullName;
+        this.name = name;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -53,12 +56,21 @@ public class User {
         return this;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public User setFullName(String fullName) {
-        this.fullName = fullName;
+    public User setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
         return this;
     }
 
