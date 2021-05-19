@@ -65,7 +65,6 @@ public class CustomerServiceImpl implements CustomerService {
     private Customer fetchCustomerByUsername(String username) throws Exception {
         Optional<Customer> customer = customerRepository.get(username);
         if (customer.isPresent()){
-            System.out.println("Welcome " + customer.get().getFullName());
             return customer.get();
         }
         else
@@ -109,18 +108,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void changePassword(Customer customer) throws Exception {
-        System.out.println("Enter old password:");
-        Object oldPassword = scanner.next();
-        System.out.println("Enter new password:");
-        String newPassword = scanner.next();
-        if (customer.getPassword().equals(oldPassword)) {
-            if (validations.validatePassword(newPassword)) {
-                customer.setPassword(newPassword);
-                customerRepository.update(customer);
+    public void changePassword(String username, String oldPass,String newPass) throws Exception {
+        Optional<Customer> customer = customerRepository.get(username);
+        if (customer.isPresent()) {
+            if (customer.get().getPassword().equals(oldPass)) {
+                if (validations.validatePassword(newPass)) {
+                    customer.get().setPassword(newPass);
+                    customerRepository.update(customer.get());
+                }
             }
         }
-
     }
 
     @Override

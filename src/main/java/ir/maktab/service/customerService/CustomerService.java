@@ -8,7 +8,7 @@ public interface CustomerService {
 
     void addOrder(Customer customer) throws Exception;
 
-    void changePassword(Customer customer) throws Exception;
+    void changePassword(String username, String oldPass,String newPass) throws Exception;
 
     void create(Customer customer);
 }
