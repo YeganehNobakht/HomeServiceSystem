@@ -7,6 +7,8 @@ import java.util.List;
 @Entity
 public class Specialist extends User{
 
+    private String Speciality;
+
     @Lob
     @Column(length = 300000,columnDefinition = "BLOB")
     @Basic(fetch = FetchType.LAZY)
@@ -31,6 +33,16 @@ public class Specialist extends User{
 
     public Specialist(){
 
+    }
+
+
+    public String getSpeciality() {
+        return Speciality;
+    }
+
+    public Specialist setSpeciality(String speciality) {
+        Speciality = speciality;
+        return this;
     }
 
     public byte[] getProfilePicture() {
