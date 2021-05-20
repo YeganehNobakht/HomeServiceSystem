@@ -5,7 +5,10 @@ import ir.maktab.data.entity.enums.UserStatus;
 import javax.persistence.*;
 import java.util.Date;
 
-@MappedSuperclass
+//@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "USER_ROLE",discriminatorType = DiscriminatorType.STRING)
 public class User {
     @Id
     private String username;
@@ -26,6 +29,9 @@ public class User {
     private Date date;
 
     private Double Balance;
+
+    @Column(name = "USER_RULE", insertable = false, updatable = false)
+    private String userRole;
 
     public User(String username, String password, String name, String lastName, String email) {
         this.username = username;
@@ -108,5 +114,9 @@ public class User {
     public User setBalance(Double balance) {
         Balance = balance;
         return this;
+    }
+
+    public String getUserRole() {
+        return userRole;
     }
 }
