@@ -2,6 +2,8 @@ package ir.maktab.service.specialistService;
 
 import ir.maktab.data.entity.Specialist;
 import ir.maktab.data.repository.specialist.SpecialistRepository;
+import ir.maktab.dto.SpecialistDto;
+import ir.maktab.service.mapper.SpecialistMapper;
 import ir.maktab.service.validations.Validations;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +14,24 @@ public class SpecialistServiceImpl implements SpecialistService{
 
     private final SpecialistRepository specialistRepository;
     private final Validations validations;
+    private final SpecialistMapper specialistMapper;
 
-    public SpecialistServiceImpl(SpecialistRepository specialistRepository, Validations validations) {
+    public SpecialistServiceImpl(SpecialistRepository specialistRepository, Validations validations, SpecialistMapper specialistMapper) {
         this.specialistRepository = specialistRepository;
         this.validations = validations;
+        this.specialistMapper = specialistMapper;
     }
 
-
     @Override
-    public void create(Specialist specialist) {
-        specialistRepository.create(specialist);
+    public void create(SpecialistDto specialistDto) throws Exception {
+        Optional<Specialist> specialist1 = specialistRepository.get(specialistDto.getUsername());
+        if (specialist1.isPresent()){
+            throw new Exception("Duplicate user");
+        }
+        else {
+            Specialist specialist = specialistMapper.toSpecialist(specialistDto);
+            specialistRepository.create(specialist);
+        }
     }
 
     @Override
@@ -41,4 +51,11 @@ public class SpecialistServiceImpl implements SpecialistService{
             }
         }
     }
+
+    @Override
+    public void update(SpecialistDto specialistDto) {
+
+    }
+
+
 }

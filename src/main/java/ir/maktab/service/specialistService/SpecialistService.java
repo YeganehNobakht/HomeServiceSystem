@@ -1,12 +1,15 @@
 package ir.maktab.service.specialistService;
 
 import ir.maktab.data.entity.Specialist;
+import ir.maktab.dto.SpecialistDto;
 
 public interface SpecialistService {
 
-    void create(Specialist specialist);
+    void create(SpecialistDto specialistDto) throws Exception;
 
     void delete(String specialistUsername);
 
-    public void changePassword(String username, String oldPass,String newPass) throws Exception;
+    void changePassword(String username, String oldPass,String newPass) throws Exception;
+
+    void update(SpecialistDto specialistDto);
 }
