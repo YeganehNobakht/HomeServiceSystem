@@ -1,14 +1,16 @@
 package ir.maktab.data.repository.subCategory;
 
-import ir.maktab.data.entity.ServiceCategory;
+
 import ir.maktab.data.entity.SubCategory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class SubCategoryRepositoryImpl implements SubCategoryRepository {
 
 

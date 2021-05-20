@@ -2,7 +2,9 @@ package ir.maktab.service.mapper;
 
 import ir.maktab.data.entity.Specialist;
 import ir.maktab.dto.SpecialistDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SpecialistMapper {
     public Specialist toSpecialist(SpecialistDto specialistDto){
         return (Specialist) new Specialist().setProfilePicture(specialistDto.getProfilePicture())

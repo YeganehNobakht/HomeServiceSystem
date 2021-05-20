@@ -2,7 +2,9 @@ package ir.maktab.service.mapper;
 
 import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.dto.ServiceCategoryDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ServiceCategoryMapper {
     public ServiceCategory toServiceCategory(ServiceCategoryDto serviceCategoryDto){
         return new ServiceCategory()

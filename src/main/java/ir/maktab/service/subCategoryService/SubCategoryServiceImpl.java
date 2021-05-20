@@ -1,11 +1,12 @@
 package ir.maktab.service.subCategoryService;
 
-import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.SubCategory;
 import ir.maktab.data.repository.subCategory.SubCategoryRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class SubCategoryServiceImpl implements SubCategoryService{
 
     private final SubCategoryRepository subCategoryRepository;
