@@ -13,6 +13,10 @@ public class SubCategory {
     @Column(unique = true)
     private String name;
 
+    private String price;
+
+    private String comment;
+
     @ManyToOne
     @JoinColumn(name = "service_category" , nullable = false, foreignKey = @ForeignKey(name = "service_category_fk"))
     private ServiceCategory serviceCategory;
@@ -27,6 +31,15 @@ public class SubCategory {
     public SubCategory setId(Integer id) {
         this.id = id;
         return this;
+    }
+
+    public SubCategory(String name, String price, String comment) {
+        this.name = name;
+        this.price = price;
+        this.comment = comment;
+    }
+
+    public SubCategory() {
     }
 
     public String getName() {
@@ -54,5 +67,35 @@ public class SubCategory {
     public SubCategory setCustomerOrderList(List<CustomerOrder> customerOrderList) {
         this.customerOrderList = customerOrderList;
         return this;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public SubCategory setPrice(String price) {
+        this.price = price;
+        return this;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public SubCategory setComment(String comment) {
+        this.comment = comment;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "SubCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", comment='" + comment + '\'' +
+                ", serviceCategory=" + serviceCategory +
+                ", customerOrderList=" + customerOrderList +
+                '}';
     }
 }
