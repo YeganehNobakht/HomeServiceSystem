@@ -1,7 +1,11 @@
 package ir.maktab.data.entity;
 
+import ir.maktab.data.entity.enums.UserStatus;
+import ir.maktab.dto.SpecialistDto;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -66,6 +70,52 @@ public class Specialist extends User{
     public List<CustomerComment> getCustomerCommentList() {
         return customerCommentList;
     }
+    @Override
+    public Specialist setUsername(String username) {
+        super.setUsername(username);
+        return this;
+    }
 
+    @Override
+    public Specialist setPassword(String password) {
+        super.setPassword(password);
+        return this;
+    }
+
+    @Override
+    public Specialist setName(String name) {
+        super.setName(name);
+        return this;
+    }
+
+    @Override
+    public Specialist setLastName(String lastName) {
+        super.setLastName(lastName);
+        return this;
+    }
+
+    @Override
+    public Specialist setEmail(String email) {
+        super.setEmail(email);
+        return this;
+    }
+
+    @Override
+    public Specialist setUserStatus(UserStatus userStatus) {
+        super.setUserStatus(userStatus);
+        return this;
+    }
+
+    @Override
+    public Specialist setDate(Date date) {
+        super.setDate(date);
+        return this;
+    }
+
+    @Override
+    public Specialist setBalance(Double balance) {
+        super.setBalance(balance);
+        return this;
+    }
 
 }
