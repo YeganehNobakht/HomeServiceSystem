@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerMapper {
     public Customer toCustomer(CustomerDto customerDto){
-        return (Customer) new Customer()
+        return new Customer()
                 .setBalance(customerDto.getBalance())
                 .setDate(customerDto.getDate())
                 .setEmail(customerDto.getEmail())
@@ -21,7 +21,7 @@ public class CustomerMapper {
 
     }
     public CustomerDto toCustomerDto(Customer customer){
-        return (CustomerDto) new CustomerDto()
+        return new CustomerDto()
                 .setBalance(customer.getBalance())
                 .setDate(customer.getDate())
                 .setEmail(customer.getEmail())
