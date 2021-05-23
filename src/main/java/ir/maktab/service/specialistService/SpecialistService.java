@@ -11,5 +11,7 @@ public interface SpecialistService {
 
     void changePassword(String username, String oldPass,String newPass) throws Exception;
 
-    void update(SpecialistDto specialistDto);
+    void update(SpecialistDto specialistDto) throws Exception;
+
+    SpecialistDto get(String username) throws Exception;
 }
