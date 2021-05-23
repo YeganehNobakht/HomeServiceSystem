@@ -53,8 +53,21 @@ public class SpecialistServiceImpl implements SpecialistService{
     }
 
     @Override
-    public void update(SpecialistDto specialistDto) {
+    public void update(SpecialistDto specialistDto) throws Exception {
+        if (specialistRepository.get(specialistDto.getUsername()).isPresent()){
+            specialistRepository.update(specialistMapper.toSpecialist(specialistDto));
+        }
+        else
+            throw new Exception("No such specialist found");
+    }
 
+    @Override
+    public SpecialistDto get(String username) throws Exception {
+        Optional<Specialist> specialist = specialistRepository.get(username);
+        if (specialist.isPresent())
+            return specialistMapper.toSpecialistDto(specialist.get());
+        else
+            throw new Exception("No such specialist found");
     }
 
 
