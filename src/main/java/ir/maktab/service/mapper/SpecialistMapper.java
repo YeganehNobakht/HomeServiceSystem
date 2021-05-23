@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpecialistMapper {
     public Specialist toSpecialist(SpecialistDto specialistDto){
-        return (Specialist) new Specialist().setProfilePicture(specialistDto.getProfilePicture())
+        return new Specialist().setProfilePicture(specialistDto.getProfilePicture())
                 .setSpeciality(specialistDto.getSpecialty())
                 .setBalance(specialistDto.getBalance())
                 .setDate(specialistDto.getDate())
@@ -20,7 +20,7 @@ public class SpecialistMapper {
 
     }
     public SpecialistDto toSpecialistDto(Specialist specialist){
-        return (SpecialistDto) new SpecialistDto().setProfilePicture(specialist.getProfilePicture())
+        return new SpecialistDto().setProfilePicture(specialist.getProfilePicture())
                 .setBalance(specialist.getBalance())
                 .setDate(specialist.getDate())
                 .setEmail(specialist.getEmail())
