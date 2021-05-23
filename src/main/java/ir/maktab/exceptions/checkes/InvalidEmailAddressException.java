@@ -1,4 +1,4 @@
-package ir.maktab.service.exceptions.checkes;
+package ir.maktab.exceptions.checkes;
 
 public class InvalidEmailAddressException extends Exception{
     public InvalidEmailAddressException(String message) {

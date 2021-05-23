@@ -1,4 +1,4 @@
-package ir.maktab.service.exceptions.checkes;
+package ir.maktab.exceptions.checkes;
 
 public class InvalidNationalIdException extends Exception{
     public InvalidNationalIdException(String message) {
