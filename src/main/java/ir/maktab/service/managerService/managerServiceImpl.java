@@ -3,26 +3,28 @@ package ir.maktab.service.managerService;
 import ir.maktab.data.entity.Customer;
 import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.Specialist;
+import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.ServiceCategoryDto;
+import ir.maktab.dto.SpecialistDto;
 import ir.maktab.dto.SubCategoryDto;
 import ir.maktab.service.customerService.CustomerService;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.specialistService.SpecialistService;
 import ir.maktab.service.validations.Validations;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 public class managerServiceImpl implements ManagerService{
 
-    private final Scanner scanner;
     private final Validations validations;
     private final CustomerService customerService;
     private final SpecialistService specialistService;
     private final ServiceCategoryService serviceCategoryService;
 
-    public managerServiceImpl(Scanner scanner, Validations validations, CustomerService customerService, SpecialistService specialistService, ServiceCategoryService serviceCategoryService) {
-        this.scanner = scanner;
+    public managerServiceImpl(Validations validations, CustomerService customerService, SpecialistService specialistService, ServiceCategoryService serviceCategoryService) {
         this.validations = validations;
         this.customerService = customerService;
         this.specialistService = specialistService;
@@ -31,35 +33,32 @@ public class managerServiceImpl implements ManagerService{
 
 
     @Override
-    public void addCustomer() throws Exception {
-        int inputNumber = getInputNumber();
-        System.out.println("Enter customer information: (username, password, full name, email)");
-        for (int i = 0; i < inputNumber; i++) {
-        Customer customer = new Customer(scanner.next(), scanner.next(), scanner.next(), scanner.next());
+    public void addCustomer(CustomerDto customerDto) throws Exception {
+        Customer customer = new Customer(customerDto.getUsername(),customerDto.getPassword(),customerDto.getName(),customerDto.getLastName(),customerDto.getEmail());
         if (validations.validatePassword(customer.getPassword())
                 && validations.validateEmail(customer.getEmail())
-                && validations.validateName(customer.getFullName())
+                && validations.validateName(customer.getName())
+                && validations.validateName(customer.getLastName())
                 && validations.validateUsername(customer.getUsername())) {
 
-            customerService.create(customer);
+            customerService.create(customerDto);
         }
     }
-}
+
 
     @Override
-    public void addSpecialist() throws Exception {
-        int inputNumber = getInputNumber();
-        System.out.println("Enter specialist information: (username, password, full name, email)");
-        for (int i = 0; i < inputNumber; i++) {
-            Specialist specialist = new Specialist(scanner.next(), scanner.next(), scanner.next(), scanner.next());
-            if (validations.validatePassword(specialist.getPassword())
-                    && validations.validateEmail(specialist.getEmail())
-                    && validations.validateName(specialist.getFullName())
-                    && validations.validateUsername(specialist.getUsername())) {
+    public void addSpecialist(SpecialistDto specialistDto) throws Exception {
 
-                specialistService.create(specialist);
-            }
+        Specialist specialist = new Specialist(specialistDto.getUsername(),specialistDto.getPassword(),specialistDto.getName(),specialistDto.getLastName(),specialistDto.getEmail());
+        if (validations.validatePassword(specialist.getPassword())
+                && validations.validateEmail(specialist.getEmail())
+                && validations.validateName(specialist.getName())
+                && validations.validateName(specialist.getLastName())
+                && validations.validateUsername(specialist.getUsername())) {
+
+            specialistService.create(specialistDto);
         }
+
     }
 
     @Override
@@ -103,19 +102,19 @@ public class managerServiceImpl implements ManagerService{
     }
 
 
-    private int getInputNumber(){
-        boolean validInput = false;
-        int numberOfInput =0;
-        while (!validInput) {
-            try {
-                System.out.println("Enter number of drivers");
-                String strDriverNumber = scanner.next();
-                numberOfInput = Integer.parseInt(strDriverNumber);
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Wrong input type! try again...");
-            }
-        }
-        return numberOfInput;
-    }
+//    private int getInputNumber(){
+//        boolean validInput = false;
+//        int numberOfInput =0;
+//        while (!validInput) {
+//            try {
+//                System.out.println("Enter number of drivers");
+//                String strDriverNumber = scanner.next();
+//                numberOfInput = Integer.parseInt(strDriverNumber);
+//                validInput = true;
+//            } catch (NumberFormatException e) {
+//                System.out.println("Wrong input type! try again...");
+//            }
+//        }
+//        return numberOfInput;
+//    }
 }
