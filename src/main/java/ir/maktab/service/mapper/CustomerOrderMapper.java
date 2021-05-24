@@ -2,7 +2,9 @@ package ir.maktab.service.mapper;
 
 import ir.maktab.data.entity.CustomerOrder;
 import ir.maktab.dto.CustomerOrderDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomerOrderMapper {
     public CustomerOrder toCustomerOrder(CustomerOrderDto customerOrderDto){
         return new CustomerOrder()
