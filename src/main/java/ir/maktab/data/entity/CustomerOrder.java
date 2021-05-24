@@ -3,7 +3,9 @@ package ir.maktab.data.entity;
 import ir.maktab.data.entity.enums.OrderStatus;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class CustomerOrder {
@@ -25,13 +27,11 @@ public class CustomerOrder {
     @Column(columnDefinition="varchar(100)")
     private String jobDescription;
 
-    private Double price;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deliveryDate;
+    private Date workDate;
 
     private Address address;
 
@@ -39,9 +39,8 @@ public class CustomerOrder {
     @JoinColumn(name="customer_order", nullable=false , foreignKey = @ForeignKey(name = "customer_order_fk"))
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name="specialist", nullable=false , foreignKey = @ForeignKey(name = "specialist_order_fk"))
-    private Specialist specialist;
+    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "customerOrder")
+    private List<Suggestion> suggestionList = new ArrayList<>();
 
 
     public Integer getId() {
@@ -71,15 +70,6 @@ public class CustomerOrder {
         return this;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public CustomerOrder setPrice(Double price) {
-        this.price = price;
-        return this;
-    }
-
     public Date getOrderDate() {
         return orderDate;
     }
@@ -89,12 +79,12 @@ public class CustomerOrder {
         return this;
     }
 
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public Date getWorkDate() {
+        return workDate;
     }
 
-    public CustomerOrder setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public CustomerOrder setWorkDate(Date deliveryDate) {
+        this.workDate = deliveryDate;
         return this;
     }
 
@@ -116,14 +106,7 @@ public class CustomerOrder {
         return this;
     }
 
-    public Specialist getSpecialist() {
-        return specialist;
-    }
 
-    public CustomerOrder setSpecialist(Specialist specialist) {
-        this.specialist = specialist;
-        return this;
-    }
 
     public ServiceCategory getServiceCategory() {
         return serviceCategory;
@@ -140,6 +123,15 @@ public class CustomerOrder {
 
     public CustomerOrder setSubCategory(SubCategory subCategory) {
         this.subCategory = subCategory;
+        return this;
+    }
+
+    public List<Suggestion> getSuggestionList() {
+        return suggestionList;
+    }
+
+    public CustomerOrder setSuggestionList(List<Suggestion> suggestionList) {
+        this.suggestionList = suggestionList;
         return this;
     }
 }
