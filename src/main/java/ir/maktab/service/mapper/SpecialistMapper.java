@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class SpecialistMapper {
     public Specialist toSpecialist(SpecialistDto specialistDto){
         return new Specialist().setProfilePicture(specialistDto.getProfilePicture())
-                .setSpeciality(specialistDto.getSpecialty())
                 .setBalance(specialistDto.getBalance())
                 .setDate(specialistDto.getDate())
                 .setEmail(specialistDto.getEmail())
