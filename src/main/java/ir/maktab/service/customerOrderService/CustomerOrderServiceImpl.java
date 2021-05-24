@@ -22,7 +22,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService{
 
     @Override
     public void addOrder(CustomerOrderDto customerOrderDto) {
-        customerOrderRepository.create(customerOrderMapper.toCustomerOrder(customerOrderDto));
+        customerOrderRepository.save(customerOrderMapper.toCustomerOrder(customerOrderDto));
     }
 
 }
