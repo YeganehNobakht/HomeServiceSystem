@@ -82,13 +82,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public List<CustomerDto> filterCustomer(CustomerDto customerDto) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Criteria criteria = session.createCriteria(Specialist.class);
-        if (customerDto.getName()!=null)
-            criteria.add(Restrictions.eq("s.name",customerDto.getName()));
+        Criteria criteria = session.createCriteria(Customer.class);
+      if (customerDto.getName()!=null)
+            criteria.add(Restrictions.eq("name",customerDto.getName()));
         if (customerDto.getLastName()!=null)
-            criteria.add(Restrictions.eq("s.lastName",customerDto.getLastName()));
+            criteria.add(Restrictions.eq("lastName",customerDto.getLastName()));
         if (customerDto.getEmail()!=null)
-            criteria.add(Restrictions.eq("s.email",customerDto.getEmail()));
+            criteria.add(Restrictions.eq("email",customerDto.getEmail()));
         criteria.setResultTransformer(Transformers.aliasToBean(CustomerDto.class));
         List list = criteria.list();
         transaction.commit();
