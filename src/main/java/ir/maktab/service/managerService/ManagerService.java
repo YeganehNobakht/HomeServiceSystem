@@ -1,15 +1,16 @@
 package ir.maktab.service.managerService;
 
 
+import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.ServiceCategoryDto;
+import ir.maktab.dto.SpecialistDto;
 import ir.maktab.dto.SubCategoryDto;
-import ir.maktab.service.subCategoryService.SubCategoryService;
 
 import java.util.List;
 
 public interface ManagerService {
-    void addCustomer() throws Exception;
-    void addSpecialist() throws Exception;
+    void addSpecialist(SpecialistDto specialistDto) throws Exception;
+    void addCustomer(CustomerDto customerDto) throws Exception;
     void deleteSpecialistFromService(String ServiceName, String SpecialistUsername) throws Exception;
     void editSpecialistFromService(String ServiceName, String SpecialistUsername);
     void addSpecialistToService();
