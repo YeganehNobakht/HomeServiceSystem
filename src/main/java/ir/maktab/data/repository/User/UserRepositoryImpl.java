@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(User.class);
         if (userDto.getUserRole()!=null)
-            criteria.add(Restrictions.eq("USER_RULE",userDto.getUserRole()));
+            criteria.add(Restrictions.eq("userRole",userDto.getUserRole()));
         if (userDto.getName()!=null)
             criteria.add(Restrictions.eq("name",userDto.getName()));
         if (userDto.getLastName()!=null)
