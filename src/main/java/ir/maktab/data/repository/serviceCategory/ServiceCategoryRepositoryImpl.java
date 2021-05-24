@@ -1,14 +1,16 @@
 package ir.maktab.data.repository.serviceCategory;
 
-import ir.maktab.data.entity.CustomerOrder;
+
 import ir.maktab.data.entity.ServiceCategory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ServiceCategoryRepositoryImpl implements ServiceCategoryRepository {
 
 
