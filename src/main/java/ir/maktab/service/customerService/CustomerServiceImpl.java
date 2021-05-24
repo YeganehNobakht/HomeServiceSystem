@@ -3,7 +3,10 @@ package ir.maktab.service.customerService;
 import ir.maktab.data.entity.*;
 import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.repository.Customer.CustomerRepository;
+import ir.maktab.dto.CustomerDto;
+import ir.maktab.dto.CustomerOrderDto;
 import ir.maktab.service.customerOrderService.CustomerOrderService;
+import ir.maktab.service.mapper.CustomerMapper;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.subCategoryService.SubCategoryService;
 import ir.maktab.service.validations.Validations;
@@ -23,17 +26,20 @@ public class CustomerServiceImpl implements CustomerService {
     private final SubCategoryService subCategoryService;
     private final CustomerOrderService customerOrderService;
     private final Validations validations;
+    private final CustomerMapper customerMapper;
 
     public CustomerServiceImpl(CustomerRepository customerRepository, Scanner scanner,
                                ServiceCategoryService serviceCategoryService,
                                SubCategoryService subCategoryService,
                                CustomerOrderService customerOrderService,
+                               CustomerMapper customerMapper,
                                Validations validations) {
         this.customerRepository = customerRepository;
         this.scanner = scanner;
         this.serviceCategoryService = serviceCategoryService;
         this.subCategoryService = subCategoryService;
         this.customerOrderService = customerOrderService;
+        this.customerMapper = customerMapper;
         this.validations = validations;
     }
 
@@ -54,10 +60,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void addOrder(Customer customer) throws Exception {
-        System.out.println("Select a service");
-        showServices();
-        registerOrder(customer);
+    public void addOrder(CustomerOrderDto customerOrderDto) {
+        customerOrderService.addOrder(customerOrderDto);
     }
 
 
@@ -70,43 +74,43 @@ public class CustomerServiceImpl implements CustomerService {
         else
             throw new Exception("User is not registered");
     }
+//
+//    private void showServices(){
+//        List<ServiceCategory> all = serviceCategoryService.getAll();
+//        for (ServiceCategory serviceCategory : all){
+//            System.out.println(serviceCategory.getName());
+//            serviceCategory.getSubCategoryList().stream()
+//                    .filter(s->s.getServiceCategory().equals(serviceCategory.getName()))
+//                    .forEach(s-> System.out.println("    - " + s.getName()));
+//        }
+//    }
 
-    private void showServices(){
-        List<ServiceCategory> all = serviceCategoryService.getAll();
-        for (ServiceCategory serviceCategory : all){
-            System.out.println(serviceCategory.getName());
-            serviceCategory.getSubCategoryList().stream()
-                    .filter(s->s.getServiceCategory().equals(serviceCategory.getName()))
-                    .forEach(s-> System.out.println("    - " + s.getName()));
-        }
-    }
-
-    private void registerOrder(Customer customer) throws Exception {
-        System.out.println("\n\nChose a service:");
-        System.out.println("Example: service/subservice");
-        String[] customerInput = scanner.next().split("/");
-        if (customerInput.length!=2)
-            throw new Exception("Invalid input");
-        ServiceCategory serviceCategory = serviceCategoryService.getByName(customerInput[0]);
-        SubCategory subCategory = subCategoryService.getByName(customerInput[1]);
-
-        System.out.println("Enter your Address");
-        System.out.println("Example: Tehran Valiasr Narges6");
-        String city = scanner.next();
-        String  street = scanner.next();
-        String alley = scanner.next();
-
-        Address address = new Address().setCity(city).setStreet(street).setAlley(alley);
-
-        CustomerOrder customerOrder= new CustomerOrder().setCustomer(customer)
-                            .setOrderDate(new Date())
-                            .setAddress(address)
-                            .setServiceCategory(serviceCategory)
-                            .setSubCategory(subCategory)
-                            .setOrderStatus(OrderStatus.WAITING_FOR_SPECIALIST_OFFER);
-        customerOrderService.create(customerOrder);
-    }
-
+//    private void registerOrder(CustomerDto customerDto) throws Exception {
+//        System.out.println("\n\nChose a service:");
+//        System.out.println("Example: service/subservice");
+//        String[] customerInput = scanner.next().split("/");
+//        if (customerInput.length!=2)
+//            throw new Exception("Invalid input");
+//        ServiceCategory serviceCategory = serviceCategoryService.getByName(customerInput[0]);
+//        SubCategory subCategory = subCategoryService.getByName(customerInput[1]);
+//
+//        System.out.println("Enter your Address");
+//        System.out.println("Example: Tehran Valiasr Narges6");
+//        String city = scanner.next();
+//        String  street = scanner.next();
+//        String alley = scanner.next();
+//
+//        Address address = new Address().setCity(city).setStreet(street).setAlley(alley);
+//
+//        CustomerOrder customerOrder= new CustomerOrder().setCustomer(customerDto)
+//                            .setOrderDate(new Date())
+//                            .setAddress(address)
+//                            .setServiceCategory(serviceCategory)
+//                            .setSubCategory(subCategory)
+//                            .setOrderStatus(OrderStatus.WAITING_FOR_SPECIALIST_OFFER);
+//        customerOrderService.create(customerOrder);
+//    }
+//
     @Override
     public void changePassword(String username, String oldPass,String newPass) throws Exception {
         Optional<Customer> customer = customerRepository.get(username);
@@ -121,7 +125,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void create(Customer customer) {
-        customerRepository.create(customer);
+    public void create(CustomerDto customerDto) throws Exception {
+
+        Customer customer = customerMapper.toCustomer(customerDto);
+        Optional<Customer> customer1 = customerRepository.get(customer.getUsername());
+        if (customer1.isPresent()){
+            throw new Exception("Duplicate customer");
+        }
+        else {
+            customerRepository.create(customer);
+        }
     }
 }
