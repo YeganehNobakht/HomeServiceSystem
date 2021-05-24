@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 public class CustomerOrderDto {
-    private Integer id;
+    private Long id;
 
     private OrderStatus orderStatus;
 
@@ -27,11 +27,11 @@ public class CustomerOrderDto {
 
     private Suggestion suggestion;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public CustomerOrderDto setId(Integer id) {
+    public CustomerOrderDto setId(Long id) {
         this.id = id;
         return this;
     }
