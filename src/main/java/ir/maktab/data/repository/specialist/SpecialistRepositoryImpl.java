@@ -78,25 +78,25 @@ public class SpecialistRepositoryImpl implements SpecialistRepository {
 
     @Override
     public List<SpecialistDto> filterSpecialist(SpecialistDto specialistDto) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Criteria criteria = session.createCriteria(Specialist.class);
-        //criteria.createAlias("s.serviceCategoryList")
+//        Session session = sessionFactory.openSession();
+//        Transaction transaction = session.beginTransaction();
+//        Criteria criteria = session.createCriteria(Specialist.class,"s");
+//        criteria.createAlias("s.serviceCategoryList","c");
+//
+//        if (specialistDto.getServiceCategoryList().size()!=0)
+//            criteria.add(Restrictions.in("c.","s.serviceCategoryList"));
+//        if (specialistDto.getName()!=null)
+//            criteria.add(Restrictions.eq("s.name",specialistDto.getName()));
+//        if (specialistDto.getLastName()!=null)
+//            criteria.add(Restrictions.eq("s.lastName",specialistDto.getLastName()));
+//        if (specialistDto.getEmail()!=null)
+//            criteria.add(Restrictions.eq("s.email",specialistDto.getEmail()));
+//        criteria.setResultTransformer(Transformers.aliasToBean(SpecialistDto.class));
+//        List list = criteria.list();
+//        transaction.commit();
+//        session.close();
+//        return list;
 
-
-        //if it is work... if didnt work->filter the result list in service according to speciality.
-        if (specialistDto.getSpecialty()!=null)
-            criteria.add(Restrictions.in(specialistDto.getSpecialty(),"s.serviceCategoryList"));
-        if (specialistDto.getName()!=null)
-            criteria.add(Restrictions.eq("s.name",specialistDto.getName()));
-        if (specialistDto.getLastName()!=null)
-            criteria.add(Restrictions.eq("s.lastName",specialistDto.getLastName()));
-        if (specialistDto.getEmail()!=null)
-            criteria.add(Restrictions.eq("s.email",specialistDto.getEmail()));
-        criteria.setResultTransformer(Transformers.aliasToBean(SpecialistDto.class));
-        List list = criteria.list();
-        transaction.commit();
-        session.close();
-        return list;
+        return null;
     }
 }
