@@ -11,7 +11,7 @@ import java.util.List;
 public class CustomerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Enumerated
     private OrderStatus orderStatus;
@@ -43,11 +43,11 @@ public class CustomerOrder {
     private List<Suggestion> suggestionList = new ArrayList<>();
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public CustomerOrder setId(Integer id) {
+    public CustomerOrder setId(Long id) {
         this.id = id;
         return this;
     }
