@@ -16,11 +16,18 @@ public class ServiceCategory {
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
     private List<SubCategory> subCategoryList = new ArrayList<>();
 
-    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory")
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
 
     @ManyToMany
     private List<Specialist> specialistList = new ArrayList<>();
+
+    public ServiceCategory(String name) {
+        this.name = name;
+    }
+
+    public ServiceCategory() {
+    }
 
     public List<Specialist> getSpecialistList() {
         return specialistList;
