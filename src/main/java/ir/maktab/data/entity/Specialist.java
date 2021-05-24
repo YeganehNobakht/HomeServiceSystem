@@ -11,8 +11,6 @@ import java.util.List;
 @Entity
 public class Specialist extends User{
 
-    private String Speciality;
-
     @Lob
     @Column(length = 300000,columnDefinition = "BLOB")
     @Basic(fetch = FetchType.LAZY)
@@ -22,10 +20,10 @@ public class Specialist extends User{
     private List<ServiceCategory> serviceCategoryList = new ArrayList<>();
 
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "specialist")
-    private List<CustomerOrder> customerOrderList = new ArrayList<>();
+    private List<CustomerComment> customerCommentList = new ArrayList<>();
 
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "specialist")
-    private List<CustomerComment> customerCommentList = new ArrayList<>();
+    private List<Suggestion> suggestionList = new ArrayList<>();
 
 
    //constructor
@@ -40,15 +38,6 @@ public class Specialist extends User{
     }
 
 
-    public String getSpeciality() {
-        return Speciality;
-    }
-
-    public Specialist setSpeciality(String speciality) {
-        Speciality = speciality;
-        return this;
-    }
-
     public byte[] getProfilePicture() {
         return profilePicture;
     }
@@ -62,14 +51,10 @@ public class Specialist extends User{
         return serviceCategoryList;
     }
 
-    public List<CustomerOrder> getCustomerOrderList() {
-        return customerOrderList;
-    }
-
-
     public List<CustomerComment> getCustomerCommentList() {
         return customerCommentList;
     }
+
     @Override
     public Specialist setUsername(String username) {
         super.setUsername(username);
@@ -118,4 +103,22 @@ public class Specialist extends User{
         return this;
     }
 
+    public Specialist setServiceCategoryList(List<ServiceCategory> serviceCategoryList) {
+        this.serviceCategoryList = serviceCategoryList;
+        return this;
+    }
+
+    public Specialist setCustomerCommentList(List<CustomerComment> customerCommentList) {
+        this.customerCommentList = customerCommentList;
+        return this;
+    }
+
+    public List<Suggestion> getSuggestionList() {
+        return suggestionList;
+    }
+
+    public Specialist setSuggestionList(List<Suggestion> suggestionList) {
+        this.suggestionList = suggestionList;
+        return this;
+    }
 }

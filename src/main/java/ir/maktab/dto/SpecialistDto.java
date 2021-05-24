@@ -16,8 +16,6 @@ public class SpecialistDto extends UserDto{
 
     private byte[] profilePicture;
 
-    private String specialty;
-
     private List<ServiceCategory> serviceCategoryList = new ArrayList<>();
 //
 //    private List<CustomerOrder> customerOrderList = new ArrayList<>();
@@ -25,15 +23,6 @@ public class SpecialistDto extends UserDto{
 //    private List<CustomerComment> customerCommentList = new ArrayList<>();
 
 
-
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public SpecialistDto setSpecialty(String specialty) {
-        this.specialty = specialty;
-        return this;
-    }
 
     public byte[] getProfilePicture() {
         return profilePicture;
