@@ -30,12 +30,12 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 
     @Override
     public List<ServiceCategory> getAll() {
-        return serviceCategoryRepository.getAll();
+        return serviceCategoryRepository.findAll();
     }
 
     @Override
     public ServiceCategory get(Integer id) throws Exception {
-        Optional<ServiceCategory> serviceCategory = serviceCategoryRepository.get(id);
+        Optional<ServiceCategory> serviceCategory = serviceCategoryRepository.findById(id);
         if (serviceCategory.isPresent())
             return serviceCategory.get();
         else
@@ -44,20 +44,20 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 
     @Override
     public ServiceCategory getByName(String name) throws Exception {
-        Optional<ServiceCategory> serviceCategory = serviceCategoryRepository.getByName(name);
-        if (serviceCategory.isPresent())
-            return serviceCategory.get();
+        ServiceCategory serviceCategory = serviceCategoryRepository.findByName(name);
+        if (serviceCategory!=null)
+            return serviceCategory;
         else
             throw new Exception("Service does not exist");
     }
 
     @Override
     public void addServiceCategory(ServiceCategoryDto serviceCategoryDto) throws Exception {
-        if (serviceCategoryRepository.getByName(serviceCategoryDto.getName()).isPresent()){
+        if (serviceCategoryRepository.findByName(serviceCategoryDto.getName())!=null){
             throw new Exception("Duplicate service");
         }
         else {
-            serviceCategoryRepository.create(serviceCategoryMapper.toServiceCategory(serviceCategoryDto));
+            serviceCategoryRepository.save(serviceCategoryMapper.toServiceCategory(serviceCategoryDto));
         }
     }
 
@@ -72,7 +72,8 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         ServiceCategory serviceCategory = getByName(serviceCategoryDto.getName());
 
         serviceCategory.getSpecialistList().remove(specialist);
-        serviceCategoryRepository.update(serviceCategory);
+        //using save method for update
+        serviceCategoryRepository.save(serviceCategory);
 
         specialist.getServiceCategoryList().remove(serviceCategory);
         specialistService.update(specialistMapper.toSpecialistDto(specialist));
@@ -85,7 +86,8 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         ServiceCategory serviceCategory = getByName(serviceCategoryDto.getName());
 
         serviceCategory.getSpecialistList().add(specialist);
-        serviceCategoryRepository.update(serviceCategory);
+        //using save method for update
+        serviceCategoryRepository.save(serviceCategory);
 
         specialist.getServiceCategoryList().add(serviceCategory);
         specialistService.update(specialistMapper.toSpecialistDto(specialist));
