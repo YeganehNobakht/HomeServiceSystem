@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     private Customer fetchCustomerByUsername(String username) throws Exception {
-        Optional<Customer> customer = customerRepository.get(username);
+        Optional<Customer> customer = customerRepository.findById(username);
         if (customer.isPresent()){
             return customer.get();
         }
@@ -113,12 +113,13 @@ public class CustomerServiceImpl implements CustomerService {
 //
     @Override
     public void changePassword(String username, String oldPass,String newPass) throws Exception {
-        Optional<Customer> customer = customerRepository.get(username);
+        Optional<Customer> customer = customerRepository.findById(username);
         if (customer.isPresent()) {
             if (customer.get().getPassword().equals(oldPass)) {
                 if (validations.validatePassword(newPass)) {
                     customer.get().setPassword(newPass);
-                    customerRepository.update(customer.get());
+                    //using save method for update
+                    customerRepository.save(customer.get());
                 }
             }
         }
@@ -128,12 +129,12 @@ public class CustomerServiceImpl implements CustomerService {
     public void create(CustomerDto customerDto) throws Exception {
 
         Customer customer = customerMapper.toCustomer(customerDto);
-        Optional<Customer> customer1 = customerRepository.get(customer.getUsername());
+        Optional<Customer> customer1 = customerRepository.findById(customer.getUsername());
         if (customer1.isPresent()){
             throw new Exception("Duplicate customer");
         }
         else {
-            customerRepository.create(customer);
+            customerRepository.save(customer);
         }
     }
 }
