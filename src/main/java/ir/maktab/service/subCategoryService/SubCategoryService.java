@@ -4,8 +4,13 @@ import ir.maktab.data.entity.SubCategory;
 import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SubCategoryDto;
 
+import java.util.List;
+
 public interface SubCategoryService {
     SubCategory get(Integer id) throws Exception;
     SubCategory getByName(String  name) throws Exception;
     void addSubService(ServiceCategoryDto serviceCategoryDto, SubCategoryDto subCategoryDto) throws Exception;
+    void update(SubCategoryDto subCategoryDto) throws Exception;
+    List<SubCategoryDto> getAll();
+    void delete(SubCategoryDto subCategoryDto) throws Exception;
 }

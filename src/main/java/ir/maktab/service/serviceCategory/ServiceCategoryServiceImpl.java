@@ -2,9 +2,11 @@ package ir.maktab.service.serviceCategory;
 
 import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.Specialist;
+import ir.maktab.data.entity.SubCategory;
 import ir.maktab.data.repository.serviceCategory.ServiceCategoryRepository;
 import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SpecialistDto;
+import ir.maktab.dto.SubCategoryDto;
 import ir.maktab.service.mapper.ServiceCategoryMapper;
 import ir.maktab.service.mapper.SpecialistMapper;
 import ir.maktab.service.specialistService.SpecialistService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceCategoryServiceImpl implements ServiceCategoryService {
@@ -26,11 +29,6 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         this.specialistMapper = specialistMapper;
         this.serviceCategoryMapper = serviceCategoryMapper;
         this.specialistService = specialistService;
-    }
-
-    @Override
-    public List<ServiceCategory> getAll() {
-        return serviceCategoryRepository.findAll();
     }
 
     @Override
@@ -63,7 +61,7 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 
     @Override
     public void updateSpecialist(SpecialistDto specialistDto) throws Exception {
-
+        specialistService.update(specialistDto);
     }
 
     @Override
@@ -91,6 +89,32 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 
         specialist.getServiceCategoryList().add(serviceCategory);
         specialistService.update(specialistMapper.toSpecialistDto(specialist));
+    }
+
+    @Override
+    public void update(ServiceCategoryDto serviceCategoryDto) throws Exception {
+        Optional<ServiceCategory> serviceCategoryRepositoryById = serviceCategoryRepository.findById(serviceCategoryDto.getId());
+        if (serviceCategoryRepositoryById.isPresent()) {
+            serviceCategoryRepository.save(serviceCategoryRepositoryById.get());
+        }
+        else
+            throw new Exception("Service category not found");
+    }
+
+    @Override
+    public List<ServiceCategoryDto> getAll() {
+        List<ServiceCategory> subCategoryList = serviceCategoryRepository.findAll();
+        return subCategoryList.stream().map(serviceCategoryMapper::toServiceCategoryDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(ServiceCategoryDto serviceCategoryDto) throws Exception {
+        Optional<ServiceCategory> serviceCategory = serviceCategoryRepository.findById(serviceCategoryDto.getId());
+        if (serviceCategory.isPresent()) {
+            serviceCategoryRepository.delete(serviceCategory.get());
+        }
+        else
+            throw new Exception("Service category not found");
     }
 
 //    @Override

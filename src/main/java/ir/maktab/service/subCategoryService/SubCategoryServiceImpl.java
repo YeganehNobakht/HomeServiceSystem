@@ -9,7 +9,9 @@ import ir.maktab.service.mapper.SubCategoryMapper;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SubCategoryServiceImpl implements SubCategoryService{
@@ -49,5 +51,31 @@ public class SubCategoryServiceImpl implements SubCategoryService{
         subCategoryDto.setServiceCategory(serviceByName);
         //using save method for update
         subCategoryRepository.save(subCategoryMapper.toSubCategory(subCategoryDto));
+    }
+
+    @Override
+    public void update(SubCategoryDto subCategoryDto) throws Exception {
+        Optional<SubCategory> subCategory = subCategoryRepository.findById(subCategoryDto.getId());
+        if (subCategory.isPresent()) {
+            subCategoryRepository.save(subCategory.get());
+        }
+        else
+            throw new Exception("Subcategory not found");
+    }
+
+    @Override
+    public List<SubCategoryDto> getAll() {
+        List<SubCategory> subCategoryList = subCategoryRepository.findAll();
+        return subCategoryList.stream().map(subCategoryMapper::toSubCategoryDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(SubCategoryDto subCategoryDto) throws Exception {
+        Optional<SubCategory> subCategory = subCategoryRepository.findById(subCategoryDto.getId());
+        if (subCategory.isPresent()) {
+            subCategoryRepository.delete(subCategory.get());
+        }
+        else
+            throw new Exception("Subcategory not found");
     }
 }
