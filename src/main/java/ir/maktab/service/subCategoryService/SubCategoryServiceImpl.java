@@ -27,7 +27,7 @@ public class SubCategoryServiceImpl implements SubCategoryService{
 
     @Override
     public SubCategory get(Integer id) throws Exception {
-        Optional<SubCategory> subCategory = subCategoryRepository.get(id);
+        Optional<SubCategory> subCategory = subCategoryRepository.findById(id);
         if (subCategory.isPresent())
             return subCategory.get();
         else
@@ -36,9 +36,9 @@ public class SubCategoryServiceImpl implements SubCategoryService{
 
     @Override
     public SubCategory getByName(String name) throws Exception {
-        Optional<SubCategory> subCategory = subCategoryRepository.getByName(name);
-        if (subCategory.isPresent())
-            return subCategory.get();
+        SubCategory subCategory = subCategoryRepository.findByName(name);
+        if (subCategory!=null)
+            return subCategory;
         else
             throw new Exception("Service does not exist");
     }
@@ -47,6 +47,7 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     public void addSubService(ServiceCategoryDto serviceCategoryDto, SubCategoryDto subCategoryDto) throws Exception {
         ServiceCategory serviceByName = serviceCategoryService.getByName(serviceCategoryDto.getName());
         subCategoryDto.setServiceCategory(serviceByName);
-        subCategoryRepository.update(subCategoryMapper.toSubCategory(subCategoryDto));
+        //using save method for update
+        subCategoryRepository.save(subCategoryMapper.toSubCategory(subCategoryDto));
     }
 }
