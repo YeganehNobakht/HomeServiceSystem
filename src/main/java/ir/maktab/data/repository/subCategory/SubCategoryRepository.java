@@ -15,4 +15,6 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory,Integer
 //    Optional<SubCategory> getByName(String name);
 //    List<SubCategory> getAll();
 //    void delete(Integer integer);
+
+    SubCategory findByName(String number);
 }
