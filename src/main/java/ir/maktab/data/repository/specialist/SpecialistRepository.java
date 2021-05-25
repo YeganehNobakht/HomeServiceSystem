@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 @Repository
-public interface SpecialistRepository extends JpaRepository<Customer,String> {
+public interface SpecialistRepository extends JpaRepository<Specialist,String> {
 //    void create(Specialist specialist);
 //    void update(Specialist specialist);
 //    Optional<Specialist> get(String id);
