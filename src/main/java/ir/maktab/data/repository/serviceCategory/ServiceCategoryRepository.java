@@ -15,4 +15,5 @@ public interface ServiceCategoryRepository extends JpaRepository<ServiceCategory
 //    Optional<ServiceCategory> getByName(String name);
 //    List<ServiceCategory> getAll();
 //    void delete(Integer integer);
+    ServiceCategory findByName(String name);
 }
