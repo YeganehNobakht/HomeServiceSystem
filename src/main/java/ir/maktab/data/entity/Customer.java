@@ -15,10 +15,10 @@ public class Customer extends User {
 
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer", fetch = FetchType.EAGER)
-    private final List<CustomerOrder> customerOrderList = new ArrayList<>();
+    private List<CustomerOrder> customerOrderList = new ArrayList<>();
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customer")
-    private final List<CustomerComment> customerCommentList = new ArrayList<>();
+    private List<CustomerComment> customerCommentList = new ArrayList<>();
 
 
     public Customer(String username, String password, String name, String lastName, String email) {
@@ -36,6 +36,15 @@ public class Customer extends User {
         return customerCommentList;
     }
 
+    public Customer setCustomerOrderList(List<CustomerOrder> customerOrderList) {
+        this.customerOrderList = customerOrderList;
+        return this;
+    }
+
+    public Customer setCustomerCommentList(List<CustomerComment> customerCommentList) {
+        this.customerCommentList = customerCommentList;
+        return this;
+    }
 
     @Override
     public Customer setUsername(String username) {
@@ -84,4 +93,5 @@ public class Customer extends User {
         super.setBalance(balance);
         return this;
     }
+
 }

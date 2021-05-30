@@ -11,19 +11,29 @@ import java.util.Date;
 import java.util.List;
 
 public class CustomerDto extends UserDto {
-    private final List<CustomerOrder> customerOrderList = new ArrayList<>();
+    private List<CustomerOrderDto> customerOrderList = new ArrayList<>();
 
-    private final List<CustomerComment> customerCommentList = new ArrayList<>();
+    private List<CustomerCommentDto> customerCommentList = new ArrayList<>();
 
-    public List<CustomerOrder> getCustomerOrderList() {
+    public List<CustomerOrderDto> getCustomerOrderList() {
         return customerOrderList;
     }
 
-    public List<CustomerComment> getCustomerCommentList() {
+    public CustomerDto setCustomerOrderList(List<CustomerOrderDto> customerOrderList) {
+        this.customerOrderList = customerOrderList;
+        return this;
+    }
+
+    public List<CustomerCommentDto> getCustomerCommentList() {
         return customerCommentList;
     }
 
-        @Override
+    public CustomerDto setCustomerCommentList(List<CustomerCommentDto> customerCommentList) {
+        this.customerCommentList = customerCommentList;
+        return this;
+    }
+
+    @Override
     public CustomerDto setUsername(String username) {
         super.setUsername(username);
         return this;
