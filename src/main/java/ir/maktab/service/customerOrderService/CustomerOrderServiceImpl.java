@@ -1,26 +1,28 @@
 package ir.maktab.service.customerOrderService;
 
-import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.repository.customerOrder.CustomerOrderRepository;
+import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.CustomerOrderDto;
-import ir.maktab.service.mapper.Mapper;
+import ir.maktab.dto.ServiceCategoryDto;
+import ir.maktab.dto.SubCategoryDto;
+import ir.maktab.service.mapper.CustomerOrderMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerOrderServiceImpl implements CustomerOrderService{
 
     private final CustomerOrderRepository customerOrderRepository;
-    private final Mapper mapper;
+    private final CustomerOrderMapper customerOrderMapper;
 
-    public CustomerOrderServiceImpl(CustomerOrderRepository customerOrderRepository, Mapper mapper) {
+    public CustomerOrderServiceImpl(CustomerOrderRepository customerOrderRepository, CustomerOrderMapper customerOrderMapper) {
         this.customerOrderRepository = customerOrderRepository;
-        this.mapper = mapper;
+        this.customerOrderMapper = customerOrderMapper;
     }
+
 
     @Override
     public void addOrder(CustomerOrderDto customerOrderDto) {
-        customerOrderDto.setOrderStatus(OrderStatus.WAITING_FOR_SPECIALIST_OFFER);
-        customerOrderRepository.save(mapper.toCustomerOrder(customerOrderDto));
+        customerOrderRepository.save(customerOrderMapper.toCustomerOrder(customerOrderDto));
     }
 
 }
