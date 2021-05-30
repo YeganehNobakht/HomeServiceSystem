@@ -6,7 +6,6 @@ import ir.maktab.data.repository.subCategory.SubCategoryRepository;
 import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SubCategoryDto;
 import ir.maktab.service.mapper.Mapper;
-import ir.maktab.service.mapper.SubCategoryMapper;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import org.springframework.stereotype.Service;
 
