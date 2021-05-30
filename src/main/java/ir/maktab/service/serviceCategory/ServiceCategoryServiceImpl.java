@@ -7,6 +7,7 @@ import ir.maktab.data.repository.serviceCategory.ServiceCategoryRepository;
 import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SpecialistDto;
 import ir.maktab.dto.SubCategoryDto;
+import ir.maktab.service.mapper.Mapper;
 import ir.maktab.service.mapper.ServiceCategoryMapper;
 import ir.maktab.service.mapper.SpecialistMapper;
 import ir.maktab.service.specialistService.SpecialistService;
@@ -21,13 +22,13 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final SpecialistMapper specialistMapper;
-    private final ServiceCategoryMapper serviceCategoryMapper;
+    private final Mapper mapper;
     private final SpecialistService specialistService;
 
-    public ServiceCategoryServiceImpl(ServiceCategoryRepository serviceCategoryRepository, SpecialistMapper specialistMapper, ServiceCategoryMapper serviceCategoryMapper, SpecialistService specialistService) {
+    public ServiceCategoryServiceImpl(ServiceCategoryRepository serviceCategoryRepository, SpecialistMapper specialistMapper, Mapper mapper, SpecialistService specialistService) {
         this.serviceCategoryRepository = serviceCategoryRepository;
         this.specialistMapper = specialistMapper;
-        this.serviceCategoryMapper = serviceCategoryMapper;
+        this.mapper = mapper;
         this.specialistService = specialistService;
     }
 
@@ -55,7 +56,7 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
             throw new Exception("Duplicate service");
         }
         else {
-            serviceCategoryRepository.save(serviceCategoryMapper.toServiceCategory(serviceCategoryDto));
+            serviceCategoryRepository.save(mapper.toServiceCategory(serviceCategoryDto));
         }
     }
 
@@ -66,7 +67,7 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 
     @Override
     public void deleteSpecialist(ServiceCategoryDto  serviceCategoryDto, SpecialistDto specialistDto) throws Exception {
-        Specialist specialist = specialistMapper.toSpecialist(specialistDto);
+        Specialist specialist = mapper.toSpecialist(specialistDto);
         ServiceCategory serviceCategory = getByName(serviceCategoryDto.getName());
 
         serviceCategory.getSpecialistList().remove(specialist);
@@ -74,13 +75,13 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         serviceCategoryRepository.save(serviceCategory);
 
         specialist.getServiceCategoryList().remove(serviceCategory);
-        specialistService.update(specialistMapper.toSpecialistDto(specialist));
+        specialistService.update(mapper.toSpecialistDto(specialist));
     }
 
     @Override
     public void addSpecialist(ServiceCategoryDto  serviceCategoryDto, SpecialistDto specialistDto) throws Exception {
 
-        Specialist specialist = specialistMapper.toSpecialist(specialistDto);
+        Specialist specialist = mapper.toSpecialist(specialistDto);
         ServiceCategory serviceCategory = getByName(serviceCategoryDto.getName());
 
         serviceCategory.getSpecialistList().add(specialist);
@@ -88,7 +89,7 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         serviceCategoryRepository.save(serviceCategory);
 
         specialist.getServiceCategoryList().add(serviceCategory);
-        specialistService.update(specialistMapper.toSpecialistDto(specialist));
+        specialistService.update(mapper.toSpecialistDto(specialist));
     }
 
     @Override
@@ -104,7 +105,7 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
     @Override
     public List<ServiceCategoryDto> getAll() {
         List<ServiceCategory> subCategoryList = serviceCategoryRepository.findAll();
-        return subCategoryList.stream().map(serviceCategoryMapper::toServiceCategoryDto).collect(Collectors.toList());
+        return subCategoryList.stream().map(mapper::toServiceCategoryDto).collect(Collectors.toList());
     }
 
     @Override

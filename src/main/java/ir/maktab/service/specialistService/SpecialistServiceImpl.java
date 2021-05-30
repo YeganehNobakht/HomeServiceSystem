@@ -3,6 +3,7 @@ package ir.maktab.service.specialistService;
 import ir.maktab.data.entity.Specialist;
 import ir.maktab.data.repository.specialist.SpecialistRepository;
 import ir.maktab.dto.SpecialistDto;
+import ir.maktab.service.mapper.Mapper;
 import ir.maktab.service.mapper.SpecialistMapper;
 import ir.maktab.service.validations.Validations;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,12 @@ public class SpecialistServiceImpl implements SpecialistService{
 
     private final SpecialistRepository specialistRepository;
     private final Validations validations;
-    private final SpecialistMapper specialistMapper;
+    private final Mapper mapper;
 
-    public SpecialistServiceImpl(SpecialistRepository specialistRepository, Validations validations, SpecialistMapper specialistMapper) {
+    public SpecialistServiceImpl(SpecialistRepository specialistRepository, Validations validations, Mapper mapper) {
         this.specialistRepository = specialistRepository;
         this.validations = validations;
-        this.specialistMapper = specialistMapper;
+        this.mapper = mapper;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class SpecialistServiceImpl implements SpecialistService{
             throw new Exception("Duplicate user");
         }
         else {
-            Specialist specialist = specialistMapper.toSpecialist(specialistDto);
+            Specialist specialist = mapper.toSpecialist(specialistDto);
             specialistRepository.save(specialist);
         }
     }
@@ -57,7 +58,7 @@ public class SpecialistServiceImpl implements SpecialistService{
     public void update(SpecialistDto specialistDto) throws Exception {
         if (specialistRepository.findById(specialistDto.getUsername()).isPresent()){
             //using save method for update
-            specialistRepository.save(specialistMapper.toSpecialist(specialistDto));
+            specialistRepository.save(mapper.toSpecialist(specialistDto));
         }
         else
             throw new Exception("No such specialist found");
@@ -67,7 +68,7 @@ public class SpecialistServiceImpl implements SpecialistService{
     public SpecialistDto get(String username) throws Exception {
         Optional<Specialist> specialist = specialistRepository.findById(username);
         if (specialist.isPresent())
-            return specialistMapper.toSpecialistDto(specialist.get());
+            return mapper.toSpecialistDto(specialist.get());
         else
             throw new Exception("No such specialist found");
 

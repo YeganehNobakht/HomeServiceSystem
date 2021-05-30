@@ -42,6 +42,9 @@ public class CustomerOrder {
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "customerOrder")
     private List<Suggestion> suggestionList = new ArrayList<>();
 
+    @ManyToOne
+    private Specialist specialist;
+
 
     public Long getId() {
         return id;

@@ -5,6 +5,7 @@ import ir.maktab.data.entity.SubCategory;
 import ir.maktab.data.repository.subCategory.SubCategoryRepository;
 import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SubCategoryDto;
+import ir.maktab.service.mapper.Mapper;
 import ir.maktab.service.mapper.SubCategoryMapper;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,13 @@ public class SubCategoryServiceImpl implements SubCategoryService{
 
     private final SubCategoryRepository subCategoryRepository;
     private final ServiceCategoryService serviceCategoryService;
-    private final SubCategoryMapper subCategoryMapper;
+    private final Mapper mapper;
 
 
-    public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository, ServiceCategoryService serviceCategoryService, SubCategoryMapper subCategoryMapper) {
+    public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository, ServiceCategoryService serviceCategoryService, Mapper mapper) {
         this.subCategoryRepository = subCategoryRepository;
         this.serviceCategoryService = serviceCategoryService;
-        this.subCategoryMapper = subCategoryMapper;
+        this.mapper = mapper;
     }
 
     @Override
@@ -48,9 +49,9 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     @Override
     public void addSubService(ServiceCategoryDto serviceCategoryDto, SubCategoryDto subCategoryDto) throws Exception {
         ServiceCategory serviceByName = serviceCategoryService.getByName(serviceCategoryDto.getName());
-        subCategoryDto.setServiceCategory(serviceByName);
+        subCategoryDto.setServiceCategory(mapper.toServiceCategoryDto(serviceByName));
         //using save method for update
-        subCategoryRepository.save(subCategoryMapper.toSubCategory(subCategoryDto));
+        subCategoryRepository.save(mapper.toSubCategory(subCategoryDto));
     }
 
     @Override
@@ -66,7 +67,7 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     @Override
     public List<SubCategoryDto> getAll() {
         List<SubCategory> subCategoryList = subCategoryRepository.findAll();
-        return subCategoryList.stream().map(subCategoryMapper::toSubCategoryDto).collect(Collectors.toList());
+        return subCategoryList.stream().map(mapper::toSubCategoryDto).collect(Collectors.toList());
     }
 
     @Override

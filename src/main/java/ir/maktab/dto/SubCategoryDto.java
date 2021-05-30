@@ -13,9 +13,9 @@ public class SubCategoryDto {
 
     private String name;
 
-    private ServiceCategory serviceCategory;
+    private ServiceCategoryDto serviceCategory;
 
-    private List<CustomerOrder> customerOrderList = new ArrayList<>();
+    private List<CustomerOrderDto> customerOrderList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -35,20 +35,20 @@ public class SubCategoryDto {
         return this;
     }
 
-    public ServiceCategory getServiceCategory() {
+    public ServiceCategoryDto getServiceCategory() {
         return serviceCategory;
     }
 
-    public SubCategoryDto setServiceCategory(ServiceCategory serviceCategory) {
+    public SubCategoryDto setServiceCategory(ServiceCategoryDto serviceCategory) {
         this.serviceCategory = serviceCategory;
         return this;
     }
 
-    public List<CustomerOrder> getCustomerOrderList() {
+    public List<CustomerOrderDto> getCustomerOrderList() {
         return customerOrderList;
     }
 
-    public SubCategoryDto setCustomerOrderList(List<CustomerOrder> customerOrderList) {
+    public SubCategoryDto setCustomerOrderList(List<CustomerOrderDto> customerOrderList) {
         this.customerOrderList = customerOrderList;
         return this;
     }
