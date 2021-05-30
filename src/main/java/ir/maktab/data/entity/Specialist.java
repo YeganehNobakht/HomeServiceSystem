@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 public class Specialist extends User{
 
+    private Double rate;
+
     @Lob
     @Column(length = 300000,columnDefinition = "BLOB")
     @Basic(fetch = FetchType.LAZY)
@@ -25,7 +27,8 @@ public class Specialist extends User{
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "specialist")
     private List<Suggestion> suggestionList = new ArrayList<>();
 
-
+@OneToMany
+private List<CustomerOrder> customerOrderList = new ArrayList<>();
    //constructor
 
 
@@ -37,6 +40,24 @@ public class Specialist extends User{
 
     }
 
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public Specialist setRate(Double rate) {
+        this.rate = rate;
+        return this;
+    }
+
+    public List<CustomerOrder> getCustomerOrderList() {
+        return customerOrderList;
+    }
+
+    public Specialist setCustomerOrderList(List<CustomerOrder> customerOrderList) {
+        this.customerOrderList = customerOrderList;
+        return this;
+    }
 
     public byte[] getProfilePicture() {
         return profilePicture;
