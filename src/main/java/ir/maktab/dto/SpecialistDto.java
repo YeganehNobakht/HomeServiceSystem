@@ -1,13 +1,7 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.entity.CustomerComment;
-import ir.maktab.data.entity.CustomerOrder;
-import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.enums.UserStatus;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,12 +10,11 @@ public class SpecialistDto extends UserDto{
 
     private byte[] profilePicture;
 
-    private List<ServiceCategory> serviceCategoryList = new ArrayList<>();
-//
-//    private List<CustomerOrder> customerOrderList = new ArrayList<>();
-//
-//    private List<CustomerComment> customerCommentList = new ArrayList<>();
+    private List<ServiceCategoryDto> serviceCategoryList = new ArrayList<>();
 
+    private List<CustomerCommentDto> customerCommentList = new ArrayList<>();
+
+    private List<SuggestionDto> suggestionList = new ArrayList<>();
 
 
     public byte[] getProfilePicture() {
@@ -33,12 +26,30 @@ public class SpecialistDto extends UserDto{
         return this;
     }
 
-    public List<ServiceCategory> getServiceCategoryList() {
+    public List<ServiceCategoryDto> getServiceCategoryList() {
         return serviceCategoryList;
     }
 
-    public SpecialistDto setServiceCategoryList(List<ServiceCategory> serviceCategoryList) {
+    public SpecialistDto setServiceCategoryList(List<ServiceCategoryDto> serviceCategoryList) {
         this.serviceCategoryList = serviceCategoryList;
+        return this;
+    }
+
+    public List<SuggestionDto> getSuggestionList() {
+        return suggestionList;
+    }
+
+    public SpecialistDto setSuggestionList(List<SuggestionDto> suggestionList) {
+        this.suggestionList = suggestionList;
+        return this;
+    }
+
+    public List<CustomerCommentDto> getCustomerCommentList() {
+        return customerCommentList;
+    }
+
+    public SpecialistDto setCustomerCommentList(List<CustomerCommentDto> customerCommentList) {
+        this.customerCommentList = customerCommentList;
         return this;
     }
 

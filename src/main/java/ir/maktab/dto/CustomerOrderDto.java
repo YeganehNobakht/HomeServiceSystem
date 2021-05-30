@@ -3,7 +3,6 @@ package ir.maktab.dto;
 import ir.maktab.data.entity.*;
 import ir.maktab.data.entity.enums.OrderStatus;
 
-import javax.persistence.*;
 import java.util.Date;
 
 public class CustomerOrderDto {
@@ -21,11 +20,11 @@ public class CustomerOrderDto {
 
     private Date workDate;
 
-    private Address address;
+    private AddressDto addressDto;
 
-    private Customer customer;
+    private CustomerDto customerDto;
 
-    private Suggestion suggestion;
+    private SuggestionDto suggestionDto;
 
     public Long getId() {
         return id;
@@ -90,30 +89,30 @@ public class CustomerOrderDto {
         return this;
     }
 
-    public Address getAddress() {
-        return address;
+    public AddressDto getAddressDto() {
+        return addressDto;
     }
 
-    public CustomerOrderDto setAddress(Address address) {
-        this.address = address;
+    public CustomerOrderDto setAddressDto(AddressDto addressDto) {
+        this.addressDto = addressDto;
         return this;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public CustomerDto getCustomerDto() {
+        return customerDto;
     }
 
-    public CustomerOrderDto setCustomer(Customer customer) {
-        this.customer = customer;
+    public CustomerOrderDto setCustomerDto(CustomerDto customerDto) {
+        this.customerDto = customerDto;
         return this;
     }
 
-    public Suggestion getSuggestion() {
-        return suggestion;
+    public SuggestionDto getSuggestionDto() {
+        return suggestionDto;
     }
 
-    public CustomerOrderDto setSuggestion(Suggestion suggestion) {
-        this.suggestion = suggestion;
+    public CustomerOrderDto setSuggestionDto(SuggestionDto suggestionDto) {
+        this.suggestionDto = suggestionDto;
         return this;
     }
 }

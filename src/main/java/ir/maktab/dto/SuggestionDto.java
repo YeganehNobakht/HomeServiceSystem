@@ -1,8 +1,5 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.entity.CustomerOrder;
-import ir.maktab.data.entity.Specialist;
-
 public class SuggestionDto {
 
     private Long id;
@@ -15,9 +12,10 @@ public class SuggestionDto {
 
     private String startTime;
 
-    private CustomerOrder customerOrder;
+    private CustomerOrderDto customerOrder;
 
-    private Specialist specialist;
+    private SpecialistDto specialistDto;
+
 
     public Long getId() {
         return id;
@@ -64,21 +62,21 @@ public class SuggestionDto {
         return this;
     }
 
-    public CustomerOrder getCustomerOrder() {
+    public CustomerOrderDto getCustomerOrder() {
         return customerOrder;
     }
 
-    public SuggestionDto setCustomerOrder(CustomerOrder customerOrder) {
+    public SuggestionDto setCustomerOrder(CustomerOrderDto customerOrder) {
         this.customerOrder = customerOrder;
         return this;
     }
 
-    public Specialist getSpecialist() {
-        return specialist;
+    public SpecialistDto getSpecialistDto() {
+        return specialistDto;
     }
 
-    public SuggestionDto setSpecialist(Specialist specialist) {
-        this.specialist = specialist;
+    public SuggestionDto setSpecialistDto(SpecialistDto specialistDto) {
+        this.specialistDto = specialistDto;
         return this;
     }
 }

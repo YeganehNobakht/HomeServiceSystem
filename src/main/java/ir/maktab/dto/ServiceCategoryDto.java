@@ -1,8 +1,5 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.entity.CustomerOrder;
-import ir.maktab.data.entity.Specialist;
-import ir.maktab.data.entity.SubCategory;
 
 import java.util.ArrayList;
 
@@ -14,11 +11,11 @@ public class ServiceCategoryDto {
 
     private String name;
 
-    private List<SubCategory> subCategoryList = new ArrayList<>();
+    private List<SubCategoryDto> subCategoryList = new ArrayList<>();
 
-    private List<CustomerOrder> customerOrderList = new ArrayList<>();
+    private List<CustomerOrderDto> customerOrderList = new ArrayList<>();
 
-    private List<Specialist> specialistList = new ArrayList<>();
+    private List<SpecialistDto> specialistList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -38,29 +35,29 @@ public class ServiceCategoryDto {
         return this;
     }
 
-    public List<SubCategory> getSubCategoryList() {
+    public List<SubCategoryDto> getSubCategoryList() {
         return subCategoryList;
     }
 
-    public ServiceCategoryDto setSubCategoryList(List<SubCategory> subCategoryList) {
+    public ServiceCategoryDto setSubCategoryList(List<SubCategoryDto> subCategoryList) {
         this.subCategoryList = subCategoryList;
         return this;
     }
 
-    public List<CustomerOrder> getCustomerOrderList() {
+    public List<CustomerOrderDto> getCustomerOrderList() {
         return customerOrderList;
     }
 
-    public ServiceCategoryDto setCustomerOrderList(List<CustomerOrder> customerOrderList) {
+    public ServiceCategoryDto setCustomerOrderList(List<CustomerOrderDto> customerOrderList) {
         this.customerOrderList = customerOrderList;
         return this;
     }
 
-    public List<Specialist> getSpecialistList() {
+    public List<SpecialistDto> getSpecialistList() {
         return specialistList;
     }
 
-    public ServiceCategoryDto setSpecialistList(List<Specialist> specialistList) {
+    public ServiceCategoryDto setSpecialistList(List<SpecialistDto> specialistList) {
         this.specialistList = specialistList;
         return this;
     }
