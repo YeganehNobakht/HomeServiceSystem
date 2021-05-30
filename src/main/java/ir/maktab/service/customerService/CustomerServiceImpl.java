@@ -1,19 +1,16 @@
 package ir.maktab.service.customerService;
 
 import ir.maktab.data.entity.*;
-import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.repository.Customer.CustomerRepository;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.CustomerOrderDto;
 import ir.maktab.service.customerOrderService.CustomerOrderService;
-import ir.maktab.service.mapper.CustomerMapper;
+import ir.maktab.service.mapper.Mapper;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.subCategoryService.SubCategoryService;
 import ir.maktab.service.validations.Validations;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -26,20 +23,20 @@ public class CustomerServiceImpl implements CustomerService {
     private final SubCategoryService subCategoryService;
     private final CustomerOrderService customerOrderService;
     private final Validations validations;
-    private final CustomerMapper customerMapper;
+    private final Mapper mapper;
 
     public CustomerServiceImpl(CustomerRepository customerRepository, Scanner scanner,
                                ServiceCategoryService serviceCategoryService,
                                SubCategoryService subCategoryService,
                                CustomerOrderService customerOrderService,
-                               CustomerMapper customerMapper,
+                               Mapper mapper,
                                Validations validations) {
         this.customerRepository = customerRepository;
         this.scanner = scanner;
         this.serviceCategoryService = serviceCategoryService;
         this.subCategoryService = subCategoryService;
         this.customerOrderService = customerOrderService;
-        this.customerMapper = customerMapper;
+        this.mapper = mapper;
         this.validations = validations;
     }
 
@@ -128,7 +125,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void create(CustomerDto customerDto) throws Exception {
 
-        Customer customer = customerMapper.toCustomer(customerDto);
+        Customer customer = mapper.toCustomer(customerDto);
         Optional<Customer> customer1 = customerRepository.findById(customer.getUsername());
         if (customer1.isPresent()){
             throw new Exception("Duplicate customer");

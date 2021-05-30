@@ -2,14 +2,10 @@ package ir.maktab.service.serviceCategory;
 
 import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.Specialist;
-import ir.maktab.data.entity.SubCategory;
 import ir.maktab.data.repository.serviceCategory.ServiceCategoryRepository;
 import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SpecialistDto;
-import ir.maktab.dto.SubCategoryDto;
 import ir.maktab.service.mapper.Mapper;
-import ir.maktab.service.mapper.ServiceCategoryMapper;
-import ir.maktab.service.mapper.SpecialistMapper;
 import ir.maktab.service.specialistService.SpecialistService;
 import org.springframework.stereotype.Service;
 
@@ -21,16 +17,15 @@ import java.util.stream.Collectors;
 public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 
     private final ServiceCategoryRepository serviceCategoryRepository;
-    private final SpecialistMapper specialistMapper;
     private final Mapper mapper;
     private final SpecialistService specialistService;
 
-    public ServiceCategoryServiceImpl(ServiceCategoryRepository serviceCategoryRepository, SpecialistMapper specialistMapper, Mapper mapper, SpecialistService specialistService) {
+    public ServiceCategoryServiceImpl(ServiceCategoryRepository serviceCategoryRepository, Mapper mapper, SpecialistService specialistService) {
         this.serviceCategoryRepository = serviceCategoryRepository;
-        this.specialistMapper = specialistMapper;
         this.mapper = mapper;
         this.specialistService = specialistService;
     }
+
 
     @Override
     public ServiceCategory get(Integer id) throws Exception {
