@@ -4,7 +4,6 @@ import ir.maktab.data.entity.Specialist;
 import ir.maktab.data.repository.specialist.SpecialistRepository;
 import ir.maktab.dto.SpecialistDto;
 import ir.maktab.service.mapper.Mapper;
-import ir.maktab.service.mapper.SpecialistMapper;
 import ir.maktab.service.validations.Validations;
 import org.springframework.stereotype.Service;
 
