@@ -1,6 +1,7 @@
 package ir.maktab.data.entity;
 
 import ir.maktab.data.entity.enums.UserStatus;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class User {
     private UserStatus userStatus;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date date;
 
     private Double Balance;
