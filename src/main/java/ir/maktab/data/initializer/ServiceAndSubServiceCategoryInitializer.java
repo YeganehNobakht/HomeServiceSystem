@@ -1,4 +1,4 @@
-package ir.maktab.data.repository.initializer;
+package ir.maktab.data.initializer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,12 +15,13 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 @Component
 public class ServiceAndSubServiceCategoryInitializer {
+
+    private static final String fileName1 = "initialize/serviceCategory.properties";
+    private static final String fileName2 = "initialize/subCategory.properties";
 
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
@@ -33,15 +34,21 @@ public class ServiceAndSubServiceCategoryInitializer {
     @PostConstruct
     public  void insertBuildingDecoration() throws IOException, ParseException {
 
-
-        if (subCategoryRepository.getAll().isEmpty()) {
+        List<SubCategory> subCategoryList = subCategoryRepository.findAll();
+        if (subCategoryList.isEmpty()) {
             Properties prop1 = new Properties();
             Properties prop2 = new Properties();
             ObjectMapper mapper = new ObjectMapper();
             SubCategory subCategory;
 
-            prop1.load(new FileInputStream("src/main/resources/initialize/serviceCategory.properties"));
-            prop2.load(new FileInputStream("src/main/resources/initialize/subCategory.properties"));
+            ClassLoader classLoader = getClass().getClassLoader();
+
+            FileInputStream file1 = new FileInputStream(Objects.requireNonNull(classLoader.getResource(fileName1)).getFile());
+            FileInputStream file2 = new FileInputStream(Objects.requireNonNull(classLoader.getResource(fileName2)).getFile());
+
+            prop1.load(file1);
+            prop2.load(file2);
+            //prop2.load(new FileInputStream("src/main/resources/initialize/subCategory.properties"));
 
 
             for (Object reader1 : prop1.keySet()) {
@@ -55,7 +62,7 @@ public class ServiceAndSubServiceCategoryInitializer {
                     while (keys.hasNext()) {
                         String key = keys.next();
                         ServiceCategory serviceCategory = new ServiceCategory(json.get(key).toString());
-                        serviceCategoryRepository.create(serviceCategory);
+                        serviceCategoryRepository.save(serviceCategory);
                         for (Object reader2 : prop2.keySet()) {
                             if (reader2.equals(json.get(key).toString())) {
                                 JSONParser jsonParser2 = new JSONParser();
@@ -70,7 +77,7 @@ public class ServiceAndSubServiceCategoryInitializer {
                                     subCategory = new SubCategory(subCategoryMap.get("Name").toString(), subCategoryMap.get("Price").toString(), subCategoryMap.get("Comment").toString());
                                     //System.out.println(subCategory.getComment());
                                     subCategory.setServiceCategory(serviceCategory);
-                                    subCategoryRepository.create(subCategory);
+                                    subCategoryRepository.save(subCategory);
                                     //serviceCategory.getSubCategoryList().add(subCategory);
                                     //serviceCategoryRepository.create(serviceCategory);
                                 }
