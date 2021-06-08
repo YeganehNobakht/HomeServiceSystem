@@ -27,7 +27,7 @@ public class Specialist extends User{
     @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "specialist")
     private List<Suggestion> suggestionList = new ArrayList<>();
 
-@OneToMany
+@OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "specialist")
 private List<CustomerOrder> customerOrderList = new ArrayList<>();
    //constructor
 
