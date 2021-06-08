@@ -3,6 +3,7 @@ package ir.maktab.service.customerService;
 import ir.maktab.data.entity.*;
 import ir.maktab.data.repository.Customer.CustomerRepository;
 import ir.maktab.dto.CustomerDto;
+import ir.maktab.dto.CustomerLoginDto;
 import ir.maktab.dto.CustomerOrderDto;
 import ir.maktab.service.customerOrderService.CustomerOrderService;
 import ir.maktab.service.mapper.Mapper;
@@ -133,5 +134,16 @@ public class CustomerServiceImpl implements CustomerService {
         else {
             customerRepository.save(customer);
         }
+    }
+
+    @Override
+    public CustomerDto login(CustomerDto customerDto) throws Exception {
+        Optional<Customer> customer = customerRepository.findById(customerDto.getUsername());
+        if (customer.isPresent()){
+            if (customer.get().getPassword().equals(customerDto.getPassword())){
+                return mapper.toCustomerDto(customer.get());
+            }
+        }
+        throw new Exception("Customer is not registered");
     }
 }
