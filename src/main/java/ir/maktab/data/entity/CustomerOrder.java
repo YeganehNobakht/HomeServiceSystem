@@ -1,6 +1,7 @@
 package ir.maktab.data.entity;
 
 import ir.maktab.data.entity.enums.OrderStatus;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class CustomerOrder {
     private String jobDescription;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date orderDate;
 
     @Temporal(TemporalType.TIMESTAMP)
