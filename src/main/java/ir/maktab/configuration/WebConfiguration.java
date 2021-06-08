@@ -20,8 +20,8 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/statics/**")
-                .addResourceLocations("/statics/");
+                .addResourceHandler("/static/**")
+                .addResourceLocations("/static/");
 
     }
 
@@ -30,24 +30,24 @@ public class WebConfiguration implements WebMvcConfigurer {
         configurer.enable();
     }
 
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor()) ;
-    }
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        return new LocaleChangeInterceptor();
-    }
-
-    @Bean
-    public FixedLocaleResolver fixedLocaleResolver(){
-        Locale.setDefault(Locale.forLanguageTag("fa_ir"));
-        FixedLocaleResolver fixedLocaleResolver= new FixedLocaleResolver();
-        fixedLocaleResolver.setDefaultLocale(Locale.forLanguageTag("fa_ir"));
-        return fixedLocaleResolver;
-
-    }
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(localeChangeInterceptor()) ;
+//    }
+//    @Bean
+//    public LocaleChangeInterceptor localeChangeInterceptor() {
+//        return new LocaleChangeInterceptor();
+//    }
+//
+//    @Bean
+//    public FixedLocaleResolver fixedLocaleResolver(){
+//        Locale.setDefault(Locale.forLanguageTag("fa_ir"));
+//        FixedLocaleResolver fixedLocaleResolver= new FixedLocaleResolver();
+//        fixedLocaleResolver.setDefaultLocale(Locale.forLanguageTag("fa_ir"));
+//        return fixedLocaleResolver;
+//
+//    }
 
     @Bean
     public InternalResourceViewResolver viewResolver() {
