@@ -2,6 +2,7 @@ package ir.maktab.service.customerService;
 
 import ir.maktab.data.entity.Customer;
 import ir.maktab.dto.CustomerDto;
+import ir.maktab.dto.CustomerLoginDto;
 import ir.maktab.dto.CustomerOrderDto;
 
 public interface CustomerService {
@@ -13,4 +14,6 @@ public interface CustomerService {
     void changePassword(String username, String oldPass,String newPass) throws Exception;
 
     void create(CustomerDto customerOrderDto) throws Exception;
+
+    CustomerDto login(CustomerDto customerDto) throws Exception;
 }
