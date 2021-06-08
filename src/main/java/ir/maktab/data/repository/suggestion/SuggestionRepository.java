@@ -14,7 +14,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 
 @Repository
-public interface SuggestionRepository extends JpaRepository , JpaSpecificationExecutor<Suggestion> {
+public interface SuggestionRepository extends JpaRepository<Suggestion,Long> , JpaSpecificationExecutor<Suggestion> {
 
 
     static Specification<Suggestion> filterSuggestion(Suggestion suggestion){
