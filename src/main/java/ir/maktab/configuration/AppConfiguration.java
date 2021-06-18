@@ -13,9 +13,9 @@ import java.util.Scanner;
 @EnableWebMvc
 public class AppConfiguration {
 
-//    @Bean("scanner")
-//    public Scanner scanner(){
-//        return new Scanner(System.in);
-//    }
+    @Bean("scanner")
+    public Scanner scanner() {
+        return new Scanner(System.in);
+    }
 
 }
