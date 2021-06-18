@@ -5,6 +5,7 @@ public enum OrderStatus {
     WAITING_FOR_SPECIALIST_CHOSE,
     WAITING_FOR_SPECIALIST_COME,
     STARTED,
-    DONE,
+    FINISHED_WORK,
+    WAIT_FOR_PAID,
     PAID;
 }
