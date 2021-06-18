@@ -1,9 +1,5 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.entity.CustomerOrder;
-import ir.maktab.data.entity.ServiceCategory;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +10,17 @@ public class SubCategoryDto {
     private String name;
 
     private ServiceCategoryDto serviceCategory;
+
+    private double price;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public SubCategoryDto setPrice(double price) {
+        this.price = price;
+        return this;
+    }
 
     private List<CustomerOrderDto> customerOrderList = new ArrayList<>();
 
@@ -52,4 +59,6 @@ public class SubCategoryDto {
         this.customerOrderList = customerOrderList;
         return this;
     }
+
+
 }
