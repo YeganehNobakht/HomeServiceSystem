@@ -1,27 +1,28 @@
 package ir.maktab.dto;
 
+import ir.maktab.data.entity.enums.SuggestionStatus;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class SuggestionDto {
 
-    private Long id;
-
+    private Integer id;
     private Double price;
-
     private String workDescription;
-
-    private String durationOfWork;
-
-    private String startTime;
-
+    private Integer durationOfWork;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startTime;
     private CustomerOrderDto customerOrder;
-
     private SpecialistDto specialistDto;
+    private SuggestionStatus suggestionStatus;
 
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public SuggestionDto setId(Long id) {
+    public SuggestionDto setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -44,20 +45,20 @@ public class SuggestionDto {
         return this;
     }
 
-    public String getDurationOfWork() {
+    public Integer getDurationOfWork() {
         return durationOfWork;
     }
 
-    public SuggestionDto setDurationOfWork(String durationOfWork) {
+    public SuggestionDto setDurationOfWork(Integer durationOfWork) {
         this.durationOfWork = durationOfWork;
         return this;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public SuggestionDto setStartTime(String startTime) {
+    public SuggestionDto setStartTime(Date startTime) {
         this.startTime = startTime;
         return this;
     }
@@ -77,6 +78,15 @@ public class SuggestionDto {
 
     public SuggestionDto setSpecialistDto(SpecialistDto specialistDto) {
         this.specialistDto = specialistDto;
+        return this;
+    }
+
+    public SuggestionStatus getSuggestionStatus() {
+        return suggestionStatus;
+    }
+
+    public SuggestionDto setSuggestionStatus(SuggestionStatus suggestionStatus) {
+        this.suggestionStatus = suggestionStatus;
         return this;
     }
 }
