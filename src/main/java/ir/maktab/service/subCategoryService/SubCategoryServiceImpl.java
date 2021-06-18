@@ -1,6 +1,5 @@
 package ir.maktab.service.subCategoryService;
 
-import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.SubCategory;
 import ir.maktab.data.repository.subCategory.SubCategoryRepository;
 import ir.maktab.dto.ServiceCategoryDto;
@@ -8,13 +7,15 @@ import ir.maktab.dto.SubCategoryDto;
 import ir.maktab.service.mapper.Mapper;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SubCategoryServiceImpl implements SubCategoryService{
+public class SubCategoryServiceImpl implements SubCategoryService {
 
     private final SubCategoryRepository subCategoryRepository;
     private final ServiceCategoryService serviceCategoryService;
@@ -37,18 +38,19 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     }
 
     @Override
-    public SubCategory getByName(String name) throws Exception {
+    @Transactional
+    public SubCategoryDto getByName(String name) throws Exception {
         SubCategory subCategory = subCategoryRepository.findByName(name);
-        if (subCategory!=null)
-            return subCategory;
+        if (subCategory != null)
+            return mapper.toSubCategoryDto(subCategory);
         else
             throw new Exception("Service does not exist");
     }
 
     @Override
     public void addSubService(ServiceCategoryDto serviceCategoryDto, SubCategoryDto subCategoryDto) throws Exception {
-        ServiceCategory serviceByName = serviceCategoryService.getByName(serviceCategoryDto.getName());
-        subCategoryDto.setServiceCategory(mapper.toServiceCategoryDto(serviceByName));
+        ServiceCategoryDto serviceByName = serviceCategoryService.getByName(serviceCategoryDto.getName());
+        subCategoryDto.setServiceCategory(serviceByName);
         //using save method for update
         subCategoryRepository.save(mapper.toSubCategory(subCategoryDto));
     }
@@ -58,8 +60,7 @@ public class SubCategoryServiceImpl implements SubCategoryService{
         Optional<SubCategory> subCategory = subCategoryRepository.findById(subCategoryDto.getId());
         if (subCategory.isPresent()) {
             subCategoryRepository.save(subCategory.get());
-        }
-        else
+        } else
             throw new Exception("Subcategory not found");
     }
 
@@ -74,8 +75,18 @@ public class SubCategoryServiceImpl implements SubCategoryService{
         Optional<SubCategory> subCategory = subCategoryRepository.findById(subCategoryDto.getId());
         if (subCategory.isPresent()) {
             subCategoryRepository.delete(subCategory.get());
-        }
-        else
+        } else
             throw new Exception("Subcategory not found");
+    }
+
+    @Override
+    public List<String> getByServiceName(String serviceName) {
+        return subCategoryRepository.findByServiceCategoryName(serviceName).stream().map(SubCategory::getName).collect(Collectors.toList());
+    }
+
+    @Override
+    public SubCategoryDto sava(SubCategoryDto subCategoryDto) {
+        SubCategory subCategory = subCategoryRepository.save(mapper.toSubCategory(subCategoryDto));
+        return mapper.toSubCategoryDto(subCategory);
     }
 }
