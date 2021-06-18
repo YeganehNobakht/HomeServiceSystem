@@ -1,14 +1,15 @@
 package ir.maktab.data.repository.subCategory;
 
-import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.SubCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 @Repository
-public interface SubCategoryRepository extends JpaRepository<SubCategory,Integer> {
+public interface SubCategoryRepository extends JpaRepository<SubCategory, Integer> {
 //    void create(SubCategory subCategory);
 //    void update(SubCategory subCategory);
 //    Optional<SubCategory> get(Integer id);
@@ -17,4 +18,7 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory,Integer
 //    void delete(Integer integer);
 
     SubCategory findByName(String number);
+
+    @Query("select s from SubCategory as s where s.serviceCategory.name=:name")
+    List<SubCategory> findByServiceCategoryName(@Param("name") String name);
 }
