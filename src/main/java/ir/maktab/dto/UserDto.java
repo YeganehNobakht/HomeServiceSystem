@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class UserDto {
 
+    private Integer id;
+
     private String username;
 
     private String password;
@@ -23,6 +25,17 @@ public class UserDto {
     private Double Balance;
 
     private String userRole;
+
+    private String Speciality;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public UserDto setId(Integer id) {
+        this.id = id;
+        return this;
+    }
 
     public String getUsername() {
         return username;
@@ -102,6 +115,15 @@ public class UserDto {
 
     public UserDto setUserRole(String userRole) {
         this.userRole = userRole;
+        return this;
+    }
+
+    public String getSpeciality() {
+        return Speciality;
+    }
+
+    public UserDto setSpeciality(String speciality) {
+        Speciality = speciality;
         return this;
     }
 }
