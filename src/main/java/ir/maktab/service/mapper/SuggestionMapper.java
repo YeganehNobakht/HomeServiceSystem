@@ -13,8 +13,9 @@ public class SuggestionMapper {
         this.mapper = mapper;
     }
 
-    Suggestion toSuggestion(SuggestionDto suggestionDto){
+    Suggestion toSuggestion(SuggestionDto suggestionDto) {
         return new Suggestion()
+                .setSuggestionStatus(suggestionDto.getSuggestionStatus())
                 .setCustomerOrder(mapper.toCustomerOrder(suggestionDto.getCustomerOrder()))
                 .setDurationOfWork(suggestionDto.getDurationOfWork())
                 .setId(suggestionDto.getId())
@@ -23,8 +24,10 @@ public class SuggestionMapper {
                 .setStartTime(suggestionDto.getStartTime())
                 .setWorkDescription(suggestionDto.getWorkDescription());
     }
-    SuggestionDto toSuggestionDto(Suggestion suggestion){
+
+    SuggestionDto toSuggestionDto(Suggestion suggestion) {
         return new SuggestionDto()
+                .setSuggestionStatus(suggestion.getSuggestionStatus())
                 .setCustomerOrder(mapper.toCustomerOrderDto(suggestion.getCustomerOrder()))
                 .setDurationOfWork(suggestion.getDurationOfWork())
                 .setId(suggestion.getId())
