@@ -2,6 +2,7 @@ package ir.maktab.service.serviceCategory;
 
 import ir.maktab.data.entity.ServiceCategory;
 import ir.maktab.data.entity.Specialist;
+import ir.maktab.data.entity.SubCategory;
 import ir.maktab.data.repository.serviceCategory.ServiceCategoryRepository;
 import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SpecialistDto;
@@ -37,20 +38,19 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
     }
 
     @Override
-    public ServiceCategory getByName(String name) throws Exception {
+    public ServiceCategoryDto getByName(String name) throws Exception {
         ServiceCategory serviceCategory = serviceCategoryRepository.findByName(name);
-        if (serviceCategory!=null)
-            return serviceCategory;
+        if (serviceCategory != null)
+            return mapper.toServiceCategoryDto(serviceCategory);
         else
             throw new Exception("Service does not exist");
     }
 
     @Override
     public void addServiceCategory(ServiceCategoryDto serviceCategoryDto) throws Exception {
-        if (serviceCategoryRepository.findByName(serviceCategoryDto.getName())!=null){
+        if (serviceCategoryRepository.findByName(serviceCategoryDto.getName()) != null) {
             throw new Exception("Duplicate service");
-        }
-        else {
+        } else {
             serviceCategoryRepository.save(mapper.toServiceCategory(serviceCategoryDto));
         }
     }
@@ -61,29 +61,29 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
     }
 
     @Override
-    public void deleteSpecialist(ServiceCategoryDto  serviceCategoryDto, SpecialistDto specialistDto) throws Exception {
+    public void deleteSpecialist(ServiceCategoryDto serviceCategoryDto, SpecialistDto specialistDto) throws Exception {
         Specialist specialist = mapper.toSpecialist(specialistDto);
-        ServiceCategory serviceCategory = getByName(serviceCategoryDto.getName());
+        ServiceCategoryDto serviceCategory = getByName(serviceCategoryDto.getName());
 
         serviceCategory.getSpecialistList().remove(specialist);
         //using save method for update
-        serviceCategoryRepository.save(serviceCategory);
+        serviceCategoryRepository.save(mapper.toServiceCategory(serviceCategory));
 
         specialist.getServiceCategoryList().remove(serviceCategory);
         specialistService.update(mapper.toSpecialistDto(specialist));
     }
 
     @Override
-    public void addSpecialist(ServiceCategoryDto  serviceCategoryDto, SpecialistDto specialistDto) throws Exception {
+    public void addSpecialist(ServiceCategoryDto serviceCategoryDto, SpecialistDto specialistDto) throws Exception {
 
         Specialist specialist = mapper.toSpecialist(specialistDto);
-        ServiceCategory serviceCategory = getByName(serviceCategoryDto.getName());
+        ServiceCategoryDto serviceCategory = getByName(serviceCategoryDto.getName());
 
-        serviceCategory.getSpecialistList().add(specialist);
+        serviceCategoryDto.getSpecialistList().add(mapper.toSpecialistDto(specialist));
         //using save method for update
-        serviceCategoryRepository.save(serviceCategory);
+        serviceCategoryRepository.save(mapper.toServiceCategory(serviceCategory));
 
-        specialist.getServiceCategoryList().add(serviceCategory);
+        specialist.getServiceCategoryList().add(mapper.toServiceCategory(serviceCategory));
         specialistService.update(mapper.toSpecialistDto(specialist));
     }
 
@@ -92,8 +92,7 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         Optional<ServiceCategory> serviceCategoryRepositoryById = serviceCategoryRepository.findById(serviceCategoryDto.getId());
         if (serviceCategoryRepositoryById.isPresent()) {
             serviceCategoryRepository.save(serviceCategoryRepositoryById.get());
-        }
-        else
+        } else
             throw new Exception("Service category not found");
     }
 
@@ -108,9 +107,14 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
         Optional<ServiceCategory> serviceCategory = serviceCategoryRepository.findById(serviceCategoryDto.getId());
         if (serviceCategory.isPresent()) {
             serviceCategoryRepository.delete(serviceCategory.get());
-        }
-        else
+        } else
             throw new Exception("Service category not found");
+    }
+
+    @Override
+    public ServiceCategoryDto sava(ServiceCategoryDto serviceCategoryDto) {
+        ServiceCategory serviceCategory = serviceCategoryRepository.save(mapper.toServiceCategory(serviceCategoryDto));
+        return mapper.toServiceCategoryDto(serviceCategory);
     }
 
 //    @Override
@@ -126,8 +130,6 @@ public class ServiceCategoryServiceImpl implements ServiceCategoryService {
 //        specialistService.update(specialistDto);
 //
 //    }
-
-
 
 
 }
