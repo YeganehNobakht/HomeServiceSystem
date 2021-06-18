@@ -14,7 +14,7 @@ public class Mapper {
         this.addressMapper = addressMapper;
     }
 
-    public Customer toCustomer(CustomerDto customerDto){
+    public Customer toCustomer(CustomerDto customerDto) {
         return new Customer()
                 .setBalance(customerDto.getBalance())
                 .setDate(customerDto.getDate())
@@ -25,9 +25,11 @@ public class Mapper {
                 .setUsername(customerDto.getUsername())
                 .setUserStatus(customerDto.getUserStatus())
                 .setCustomerOrderList(customerDto.getCustomerOrderList().stream().map(this::toCustomerOrder).collect(Collectors.toList()))
-                .setCustomerCommentList(customerDto.getCustomerCommentList().stream().map(this::toCustomerComment).collect(Collectors.toList()));
+                .setCustomerCommentList(customerDto.getCustomerCommentList().stream().map(this::toCustomerComment).collect(Collectors.toList()))
+                .setId(customerDto.getId());
     }
-    public CustomerDto toCustomerDto(Customer customer){
+
+    public CustomerDto toCustomerDto(Customer customer) {
         return new CustomerDto()
                 .setBalance(customer.getBalance())
                 .setDate(customer.getDate())
@@ -37,22 +39,24 @@ public class Mapper {
                 .setPassword(customer.getPassword())
                 .setUsername(customer.getUsername())
                 .setUserStatus(customer.getUserStatus())
-                .setCustomerOrderList(customer.getCustomerOrderList().stream().map(this::toCustomerOrderDto).collect(Collectors.toList()))
-                .setCustomerCommentList(customer.getCustomerCommentList().stream().map(this::toCustomerCommentDto).collect(Collectors.toList()));
+                //.setCustomerOrderList(customer.getCustomerOrderList().stream().map(this::toCustomerOrderDto).collect(Collectors.toList()))
+                .setCustomerCommentList(customer.getCustomerCommentList().stream().map(this::toCustomerCommentDto).collect(Collectors.toList()))
+                .setId(customer.getId());
 
     }
 
-    public CustomerOrder toCustomerOrder(CustomerOrderDto customerOrderDto){
+    public CustomerOrder toCustomerOrder(CustomerOrderDto customerOrderDto) {
         return new CustomerOrder()
                 .setAddress(addressMapper.toAddress(customerOrderDto.getAddressDto()))
                 .setCustomer(toCustomer(customerOrderDto.getCustomerDto()))
                 .setOrderDate(customerOrderDto.getOrderDate())
                 .setOrderStatus(customerOrderDto.getOrderStatus())
-                .setServiceCategory(customerOrderDto.getServiceCategory())
-                .setSubCategory(customerOrderDto.getSubCategory())
+                .setServiceCategory(toServiceCategory(customerOrderDto.getServiceCategory()))
+                .setSubCategory(toSubCategory(customerOrderDto.getSubCategory()))
                 .setId(customerOrderDto.getId())
                 .setJobDescription(customerOrderDto.getJobDescription())
-                .setWorkDate(customerOrderDto.getWorkDate());
+                .setWorkDate(customerOrderDto.getWorkDate())
+                .setPrice(customerOrderDto.getPrice());
     }
 
     public CustomerOrderDto toCustomerOrderDto(CustomerOrder customerOrder) {
@@ -61,18 +65,20 @@ public class Mapper {
                 .setCustomerDto(toCustomerDto(customerOrder.getCustomer()))
                 .setOrderDate(customerOrder.getOrderDate())
                 .setOrderStatus(customerOrder.getOrderStatus())
-                .setServiceCategory(customerOrder.getServiceCategory())
-                .setSubCategory(customerOrder.getSubCategory())
+                .setServiceCategory(toServiceCategoryDto(customerOrder.getServiceCategory()))
+                .setSubCategory(toSubCategoryDto((customerOrder.getSubCategory())))
                 .setId(customerOrder.getId())
                 .setJobDescription(customerOrder.getJobDescription())
-                .setWorkDate(customerOrder.getWorkDate());
+                .setWorkDate(customerOrder.getWorkDate())
+                .setPrice(customerOrder.getPrice());
     }
 
     public SubCategoryDto toSubCategoryDto(SubCategory subCategory) {
         return new SubCategoryDto()
                 .setId(subCategory.getId())
                 .setName(subCategory.getName())
-                .setCustomerOrderList(subCategory.getCustomerOrderList().stream().map(this::toCustomerOrderDto).collect(Collectors.toList()))
+                .setPrice(subCategory.getPrice())
+               // .setCustomerOrderList(subCategory.getCustomerOrderList().stream().map(this::toCustomerOrderDto).collect(Collectors.toList()))
                 .setServiceCategory(toServiceCategoryDto(subCategory.getServiceCategory()));
     }
 
@@ -80,28 +86,30 @@ public class Mapper {
         return new SubCategory()
                 .setId(subCategoryDto.getId())
                 .setName(subCategoryDto.getName())
-                .setCustomerOrderList(subCategoryDto.getCustomerOrderList().stream().map(this::toCustomerOrder).collect(Collectors.toList()))
+                .setPrice(subCategoryDto.getPrice())
+                //.setCustomerOrderList(subCategoryDto.getCustomerOrderList().stream().map(this::toCustomerOrder).collect(Collectors.toList()))
                 .setServiceCategory(toServiceCategory(subCategoryDto.getServiceCategory()));
     }
 
-    public ServiceCategory toServiceCategory(ServiceCategoryDto serviceCategoryDto){
+    public ServiceCategory toServiceCategory(ServiceCategoryDto serviceCategoryDto) {
         return new ServiceCategory()
                 .setId(serviceCategoryDto.getId())
                 .setName(serviceCategoryDto.getName())
                 .setSubCategoryList(serviceCategoryDto.getSubCategoryList().stream().map(this::toSubCategory).collect(Collectors.toList()))
-                .setCustomerOrderList(serviceCategoryDto.getCustomerOrderList().stream().map(this::toCustomerOrder).collect(Collectors.toList()))
-                .setSpecialistList(serviceCategoryDto.getSpecialistList().stream().map(this::toSpecialist).collect(Collectors.toList()));
-    }
-    public ServiceCategoryDto toServiceCategoryDto(ServiceCategory serviceCategory){
-        return new ServiceCategoryDto()
-                .setId(serviceCategory.getId())
-                .setName(serviceCategory.getName())
-                .setSubCategoryList(serviceCategory.getSubCategoryList().stream().map(this::toSubCategoryDto).collect(Collectors.toList()))
-                .setCustomerOrderList(serviceCategory.getCustomerOrderList().stream().map(this::toCustomerOrderDto).collect(Collectors.toList()))
-                .setSpecialistList(serviceCategory.getSpecialistList().stream().map(this::toSpecialistDto).collect(Collectors.toList()));
+                .setCustomerOrderList(serviceCategoryDto.getCustomerOrderList().stream().map(this::toCustomerOrder).collect(Collectors.toList()));
+//                .setSpecialistList(serviceCategoryDto.getSpecialistList().stream().map(this::toSpecialist).collect(Collectors.toList()));
     }
 
-    public CustomerComment toCustomerComment(CustomerCommentDto customerCommentDto){
+    public ServiceCategoryDto toServiceCategoryDto(ServiceCategory serviceCategory) {
+        return new ServiceCategoryDto()
+                .setId(serviceCategory.getId())
+                .setName(serviceCategory.getName());
+//                .setSubCategoryList(serviceCategory.getSubCategoryList().stream().map(this::toSubCategoryDto).collect(Collectors.toList()))
+//                .setCustomerOrderList(serviceCategory.getCustomerOrderList().stream().map(this::toCustomerOrderDto).collect(Collectors.toList()))
+//                .setSpecialistList(serviceCategory.getSpecialistList().stream().map(this::toSpecialistDto).collect(Collectors.toList()));
+    }
+
+    public CustomerComment toCustomerComment(CustomerCommentDto customerCommentDto) {
         return new CustomerComment()
                 .setComment(customerCommentDto.getComment())
                 .setCustomer(toCustomer(customerCommentDto.getCustomerDto()))
@@ -109,7 +117,8 @@ public class Mapper {
                 .setScore(customerCommentDto.getScore())
                 .setSpecialist(toSpecialist(customerCommentDto.getSpecialistDto()));
     }
-    public CustomerCommentDto toCustomerCommentDto(CustomerComment customerComment){
+
+    public CustomerCommentDto toCustomerCommentDto(CustomerComment customerComment) {
         return new CustomerCommentDto()
                 .setComment(customerComment.getComment())
                 .setCustomerDto(toCustomerDto(customerComment.getCustomer()))
@@ -118,8 +127,10 @@ public class Mapper {
                 .setSpecialistDto(toSpecialistDto((customerComment.getSpecialist())));
     }
 
-    public Specialist toSpecialist(SpecialistDto specialistDto){
+    public Specialist toSpecialist(SpecialistDto specialistDto) {
         return new Specialist().setProfilePicture(specialistDto.getProfilePicture())
+                .setRate(specialistDto.getRate())
+                .setId(specialistDto.getId())
                 .setBalance(specialistDto.getBalance())
                 .setDate(specialistDto.getDate())
                 .setEmail(specialistDto.getEmail())
@@ -128,13 +139,16 @@ public class Mapper {
                 .setPassword(specialistDto.getPassword())
                 .setUsername(specialistDto.getUsername())
                 .setUserStatus(specialistDto.getUserStatus())
-                .setServiceCategoryList(specialistDto.getServiceCategoryList().stream().map(this::toServiceCategory).collect(Collectors.toList()))
-                .setCustomerCommentList(specialistDto.getCustomerCommentList().stream().map(this::toCustomerComment).collect(Collectors.toList()))
-                .setSuggestionList(specialistDto.getSuggestionList().stream().map(s->toSuggestion(s)).collect(Collectors.toList()));
+                .setServiceCategoryList(specialistDto.getServiceCategoryList().stream().map(this::toServiceCategory).collect(Collectors.toList()));
+//                .setCustomerCommentList(specialistDto.getCustomerCommentList().stream().map(this::toCustomerComment).collect(Collectors.toList()))
+//                .setSuggestionList(specialistDto.getSuggestionList().stream().map(s -> toSuggestion(s)).collect(Collectors.toList()));
 
     }
-    public SpecialistDto toSpecialistDto(Specialist specialist){
+
+    public SpecialistDto toSpecialistDto(Specialist specialist) {
         return new SpecialistDto().setProfilePicture(specialist.getProfilePicture())
+                .setId(specialist.getId())
+                .setRate(specialist.getRate())
                 .setBalance(specialist.getBalance())
                 .setDate(specialist.getDate())
                 .setEmail(specialist.getEmail())
@@ -143,15 +157,16 @@ public class Mapper {
                 .setPassword(specialist.getPassword())
                 .setUsername(specialist.getUsername())
                 .setUserStatus(specialist.getUserStatus())
-                .setServiceCategoryList(specialist.getServiceCategoryList().stream().map(this::toServiceCategoryDto).collect(Collectors.toList()))
-                .setCustomerCommentList(specialist.getCustomerCommentList().stream().map(this::toCustomerCommentDto).collect(Collectors.toList()))
-                .setSuggestionList(specialist.getSuggestionList().stream().map(s->toSuggestionDto(s)).collect(Collectors.toList()));
+                .setServiceCategoryList(specialist.getServiceCategoryList().stream().map(this::toServiceCategoryDto).collect(Collectors.toList()));
+//                .setCustomerCommentList(specialist.getCustomerCommentList().stream().map(this::toCustomerCommentDto).collect(Collectors.toList()))
+//                .setSuggestionList(specialist.getSuggestionList().stream().map(s -> toSuggestionDto(s)).collect(Collectors.toList()));
 
     }
 
 
-    public Suggestion toSuggestion(SuggestionDto suggestionDto){
+    public Suggestion toSuggestion(SuggestionDto suggestionDto) {
         return new Suggestion()
+                .setSuggestionStatus(suggestionDto.getSuggestionStatus())
                 .setCustomerOrder(toCustomerOrder(suggestionDto.getCustomerOrder()))
                 .setDurationOfWork(suggestionDto.getDurationOfWork())
                 .setId(suggestionDto.getId())
@@ -160,8 +175,10 @@ public class Mapper {
                 .setStartTime(suggestionDto.getStartTime())
                 .setWorkDescription(suggestionDto.getWorkDescription());
     }
-    public SuggestionDto toSuggestionDto(Suggestion suggestion){
+
+    public SuggestionDto toSuggestionDto(Suggestion suggestion) {
         return new SuggestionDto()
+                .setSuggestionStatus(suggestion.getSuggestionStatus())
                 .setCustomerOrder(toCustomerOrderDto(suggestion.getCustomerOrder()))
                 .setDurationOfWork(suggestion.getDurationOfWork())
                 .setId(suggestion.getId())
