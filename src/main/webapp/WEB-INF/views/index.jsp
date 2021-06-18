@@ -38,8 +38,8 @@
                        aria-expanded="false">Customer Service</a>
                     <ul class="dropdown-menu">
                         <li>
-<%--                            <a class="nav-link" href="" data-toggle="modal" data-target="#modalLoginForm">Login </a>--%>
-<%--                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#modalLoginForm">Sign in</a>--%>
+                            <%--                            <a class="nav-link" href="" data-toggle="modal" data-target="#modalLoginForm">Login </a>--%>
+                            <%--                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#modalLoginForm">Sign in</a>--%>
                         <li><a class="dropdown-item" href="customer/login">sign in</a></li>
                         </li>
                         <li><a class="dropdown-item" href="#">sign up</a></li>
@@ -49,15 +49,15 @@
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                        aria-expanded="false">Specialist Service</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Sign in</a></li>
-                        <li><a class="dropdown-item" href="#">sign up</a></li>
+                        <li><a class="dropdown-item" href="specialist/login">Sign in</a></li>
+                        <li><a class="dropdown-item" href="specialist/signUp">sign up</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-expanded="false">Admin</a>
+                       aria-expanded="false">Manager Service</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Sign in</a></li>
+                        <li><a class="dropdown-item" href="/mngr/login">Sign in</a></li>
                     </ul>
                 </li>
 
@@ -100,7 +100,8 @@
                      class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block text-dark">
                     <h1>Home Cleaning</h1>
-                    <h2>By booking Bama Home Cleaning Services, you can be sure that your home or office cleaning is done
+                    <h2>By booking Bama Home Cleaning Services, you can be sure that your home or office cleaning is
+                        done
                         well.</h2>
                 </div>
             </div>
@@ -118,45 +119,6 @@
     </div>
 </div>
 
-
-
-<%--modal--%>
-<form:form modelAttribute="customer" action="customerSignIn" method="post">
-    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-<%--                header--%>
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-<%--                body--%>
-                <table>
-                <div class="modal-body mx-3">
-                    <div class="md-form mb-5">
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        <input type="text" id="username" name="username" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="username">Your username</label>
-                    </div>
-
-                    <div class="md-form mb-4">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input type="password" id="password" name="password" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="password">Your password</label>
-                    </div>
-
-                </div>
-<%--                footer--%>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="submit" class="btn btn-default" id="submit">Login</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form:form>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
