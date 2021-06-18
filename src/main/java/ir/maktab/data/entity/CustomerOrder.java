@@ -2,7 +2,6 @@ package ir.maktab.data.entity;
 
 import ir.maktab.data.entity.enums.OrderStatus;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,47 +11,38 @@ import java.util.List;
 public class CustomerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Enumerated
+    private Integer id;
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
     @ManyToOne
-    @JoinColumn(name="category", nullable=false , foreignKey = @ForeignKey(name = "category_order_fk"))
+    @JoinColumn(name = "category_order", nullable = false, foreignKey = @ForeignKey(name = "category_order_fk"))
     private ServiceCategory serviceCategory;
-
     @ManyToOne
-    @JoinColumn(name="subcategory", nullable=false , foreignKey = @ForeignKey(name = "subcategory_order_fk"))
+    @JoinColumn(name = "subcategory_order", nullable = false, foreignKey = @ForeignKey(name = "subcategory_order_fk"))
     private SubCategory subCategory;
-
-    @Column(columnDefinition="varchar(100)")
+    @Column(columnDefinition = "varchar(100)")
     private String jobDescription;
-
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date orderDate;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date workDate;
-
     private Address address;
-
+    private double price;
     @ManyToOne
-    @JoinColumn(name="customer_order", nullable=false , foreignKey = @ForeignKey(name = "customer_order_fk"))
+    @JoinColumn(name = "customerColumn", nullable = false, foreignKey = @ForeignKey(name = "customer_order_fk"))
     private Customer customer;
-
-    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "customerOrder")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "customerOrder")
     private List<Suggestion> suggestionList = new ArrayList<>();
+//    @ManyToOne
+//    @JoinColumn(name="specialist_order" , foreignKey = @ForeignKey(name = "specialist_order_fk"))
+//    private Specialist specialist;
 
-    @ManyToOne
-    private Specialist specialist;
-
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public CustomerOrder setId(Long id) {
+    public CustomerOrder setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -112,7 +102,6 @@ public class CustomerOrder {
     }
 
 
-
     public ServiceCategory getServiceCategory() {
         return serviceCategory;
     }
@@ -139,4 +128,21 @@ public class CustomerOrder {
         this.suggestionList = suggestionList;
         return this;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public CustomerOrder setPrice(double price) {
+        this.price = price;
+        return this;
+    }
+    //    public Specialist getSpecialist() {
+//        return specialist;
+//    }
+//
+//    public CustomerOrder setSpecialist(Specialist specialist) {
+//        this.specialist = specialist;
+//        return this;
+//    }
 }
