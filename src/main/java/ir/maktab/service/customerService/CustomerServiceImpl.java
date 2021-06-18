@@ -1,9 +1,9 @@
 package ir.maktab.service.customerService;
 
-import ir.maktab.data.entity.*;
+import ir.maktab.configuration.discountProperty.RetunedMoney;
+import ir.maktab.data.entity.Customer;
 import ir.maktab.data.repository.Customer.CustomerRepository;
 import ir.maktab.dto.CustomerDto;
-import ir.maktab.dto.CustomerLoginDto;
 import ir.maktab.dto.CustomerOrderDto;
 import ir.maktab.service.customerOrderService.CustomerOrderService;
 import ir.maktab.service.mapper.Mapper;
@@ -11,7 +11,9 @@ import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.subCategoryService.SubCategoryService;
 import ir.maktab.service.validations.Validations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -25,13 +27,14 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerOrderService customerOrderService;
     private final Validations validations;
     private final Mapper mapper;
+    private final RetunedMoney retunedMoney;
 
     public CustomerServiceImpl(CustomerRepository customerRepository, Scanner scanner,
                                ServiceCategoryService serviceCategoryService,
                                SubCategoryService subCategoryService,
                                CustomerOrderService customerOrderService,
                                Mapper mapper,
-                               Validations validations) {
+                               Validations validations, RetunedMoney retunedMoney) {
         this.customerRepository = customerRepository;
         this.scanner = scanner;
         this.serviceCategoryService = serviceCategoryService;
@@ -39,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerOrderService = customerOrderService;
         this.mapper = mapper;
         this.validations = validations;
+        this.retunedMoney = retunedMoney;
     }
 
     @Override
@@ -48,28 +52,29 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.println("Password");
         String password = scanner.next();
         Customer customer = fetchCustomerByUsername(username);
-        if (customer.getPassword().equals(password)){
+        if (customer.getPassword().equals(password)) {
             System.out.println("You are successfully sign in");
             return customer;
-        }
-        else
+        } else
             throw new Exception("Incorrect password");
 
     }
 
     @Override
-    public void addOrder(CustomerOrderDto customerOrderDto) {
-        customerOrderService.addOrder(customerOrderDto);
+    public void update(CustomerDto customerDto) throws Exception {
+        if (customerRepository.findById(customerDto.getId()).isPresent()) {
+            //using save method for update
+            customerRepository.save(mapper.toCustomer(customerDto));
+        } else
+            throw new Exception("No such customer found");
     }
 
 
-
     private Customer fetchCustomerByUsername(String username) throws Exception {
-        Optional<Customer> customer = customerRepository.findById(username);
-        if (customer.isPresent()){
+        Optional<Customer> customer = customerRepository.findByUsername(username);
+        if (customer.isPresent()) {
             return customer.get();
-        }
-        else
+        } else
             throw new Exception("User is not registered");
     }
 //
@@ -83,7 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
 //        }
 //    }
 
-//    private void registerOrder(CustomerDto customerDto) throws Exception {
+    //    private void registerOrder(CustomerDto customerDto) throws Exception {
 //        System.out.println("\n\nChose a service:");
 //        System.out.println("Example: service/subservice");
 //        String[] customerInput = scanner.next().split("/");
@@ -110,8 +115,8 @@ public class CustomerServiceImpl implements CustomerService {
 //    }
 //
     @Override
-    public void changePassword(String username, String oldPass,String newPass) throws Exception {
-        Optional<Customer> customer = customerRepository.findById(username);
+    public void changePassword(String username, String oldPass, String newPass) throws Exception {
+        Optional<Customer> customer = customerRepository.findByUsername(username);
         if (customer.isPresent()) {
             if (customer.get().getPassword().equals(oldPass)) {
                 if (validations.validatePassword(newPass)) {
@@ -127,23 +132,45 @@ public class CustomerServiceImpl implements CustomerService {
     public void create(CustomerDto customerDto) throws Exception {
 
         Customer customer = mapper.toCustomer(customerDto);
-        Optional<Customer> customer1 = customerRepository.findById(customer.getUsername());
-        if (customer1.isPresent()){
+        Optional<Customer> customer1 = customerRepository.findByUsername(customer.getUsername());
+        if (customer1.isPresent()) {
             throw new Exception("Duplicate customer");
-        }
-        else {
+        } else {
             customerRepository.save(customer);
         }
     }
 
     @Override
     public CustomerDto login(CustomerDto customerDto) throws Exception {
-        Optional<Customer> customer = customerRepository.findById(customerDto.getUsername());
-        if (customer.isPresent()){
-            if (customer.get().getPassword().equals(customerDto.getPassword())){
+        Optional<Customer> customer = customerRepository.findByUsername(customerDto.getUsername());
+        if (customer.isPresent()) {
+            if (customer.get().getPassword().equals(customerDto.getPassword())) {
                 return mapper.toCustomerDto(customer.get());
             }
         }
         throw new Exception("Customer is not registered");
     }
+
+    @Override
+    public List<CustomerOrderDto> getOrders(CustomerDto customerDto) throws Exception {
+        return customerOrderService.findByCustomer(customerDto);
+    }
+
+    @Transactional
+    @Override
+    public double returnMoney(double price, CustomerDto customerDto) {
+        double discount = price*retunedMoney.getDiscount();
+        double balance = customerDto.getBalance()+discount;
+        customerDto.setBalance(customerDto.getBalance()+discount);
+        customerRepository.updateBalance(customerDto.getId(),balance);
+        return discount;
+    }
+
+    @Override
+    public void payByAccount(CustomerDto customerDto, double price) {
+        double newBalance = customerDto.getBalance()-price;
+        customerRepository.updateBalance(customerDto.getId(),newBalance);
+    }
+
+
 }
