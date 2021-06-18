@@ -1,12 +1,14 @@
 package ir.maktab.dto;
 
+import ir.maktab.data.entity.Specialist;
 import ir.maktab.data.entity.enums.UserStatus;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SpecialistDto extends UserDto{
+public class SpecialistDto extends UserDto {
+    private double rate;
 
     private byte[] profilePicture;
 
@@ -50,6 +52,21 @@ public class SpecialistDto extends UserDto{
 
     public SpecialistDto setCustomerCommentList(List<CustomerCommentDto> customerCommentList) {
         this.customerCommentList = customerCommentList;
+        return this;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public SpecialistDto setRate(double rate) {
+        this.rate = rate;
+        return this;
+    }
+
+    @Override
+    public SpecialistDto setId(Integer id) {
+        super.setId(id);
         return this;
     }
 
