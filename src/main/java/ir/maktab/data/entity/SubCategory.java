@@ -1,5 +1,8 @@
 package ir.maktab.data.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,19 +13,29 @@ public class SubCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "sub_category_unique_name")
     private String name;
 
-    private String price;
+    private double price;
 
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "service_category" , nullable = false, foreignKey = @ForeignKey(name = "service_category_fk"))
+    @JoinColumn(name = "service_category", nullable = false, foreignKey = @ForeignKey(name = "service_category_fk"))
     private ServiceCategory serviceCategory;
 
-    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "subCategory")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
+
+    public SubCategory(String name, double price, String comment) {
+        this.name = name;
+        this.price = price;
+        this.comment = comment;
+    }
+
+    public SubCategory() {
+    }
 
     public Integer getId() {
         return id;
@@ -31,15 +44,6 @@ public class SubCategory {
     public SubCategory setId(Integer id) {
         this.id = id;
         return this;
-    }
-
-    public SubCategory(String name, String price, String comment) {
-        this.name = name;
-        this.price = price;
-        this.comment = comment;
-    }
-
-    public SubCategory() {
     }
 
     public String getName() {
@@ -69,11 +73,11 @@ public class SubCategory {
         return this;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public SubCategory setPrice(String price) {
+    public SubCategory setPrice(double price) {
         this.price = price;
         return this;
     }
