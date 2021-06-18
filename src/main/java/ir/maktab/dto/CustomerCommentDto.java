@@ -1,9 +1,5 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.entity.Customer;
-import ir.maktab.data.entity.Specialist;
-
-
 public class CustomerCommentDto {
     private Integer id;
 
