@@ -7,17 +7,15 @@ public class CustomerComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String comment;
-
     private Double score;
 
     @ManyToOne
-    @JoinColumn(name="customer_id", nullable=false , foreignKey = @ForeignKey(name = "customer_comment_fk"))
+    @JoinColumn(name = "customer_comment", nullable = false, foreignKey = @ForeignKey(name = "customer_comment_fk"))
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name="specialist_id", nullable=false , foreignKey = @ForeignKey(name = "specialist_comment_fk"))
+    @JoinColumn(name = "specialist_comment", nullable = false, foreignKey = @ForeignKey(name = "specialist_comment_fk"))
     private Specialist specialist;
 
 
