@@ -9,30 +9,25 @@ import java.util.Date;
 //@MappedSuperclass
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "USER_ROLE",discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "USER_ROLE", discriminatorType = DiscriminatorType.STRING)
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(unique = true)
     private String username;
-
     private String password;
-
     private String name;
-
     private String lastName;
-
     @Column(unique = true)
     private String email;
-
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
-
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date date;
-
     private Double Balance;
-
-    @Column(name = "USER_RULE", insertable = false, updatable = false)
+    @Column(name = "USER_ROLE", insertable = false, updatable = false)
     private String userRole;
 
     public User(String username, String password, String name, String lastName, String email) {
@@ -44,6 +39,15 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public User setId(Integer id) {
+        this.id = id;
+        return this;
     }
 
     public String getUsername() {
@@ -120,5 +124,10 @@ public class User {
 
     public String getUserRole() {
         return userRole;
+    }
+
+    public User setUserRole(String userRole) {
+        this.userRole = userRole;
+        return this;
     }
 }
