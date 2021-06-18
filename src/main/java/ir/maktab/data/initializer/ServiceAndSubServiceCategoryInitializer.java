@@ -12,9 +12,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
-
 import javax.annotation.PostConstruct;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 
 @Component
@@ -74,7 +74,7 @@ public class ServiceAndSubServiceCategoryInitializer {
                                     Map subCategoryMap = mapper.readValue(json2.toString(), new TypeReference<Map>() {
                                     });
                                     //System.out.println(subCategoryMap);
-                                    subCategory = new SubCategory(subCategoryMap.get("Name").toString(), subCategoryMap.get("Price").toString(), subCategoryMap.get("Comment").toString());
+                                    subCategory = new SubCategory(subCategoryMap.get("Name").toString(), (Double) subCategoryMap.get("Price"), subCategoryMap.get("Comment").toString());
                                     //System.out.println(subCategory.getComment());
                                     subCategory.setServiceCategory(serviceCategory);
                                     subCategoryRepository.save(subCategory);
