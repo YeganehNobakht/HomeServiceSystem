@@ -1,11 +1,7 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.entity.CustomerComment;
-import ir.maktab.data.entity.CustomerOrder;
 import ir.maktab.data.entity.enums.UserStatus;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +26,12 @@ public class CustomerDto extends UserDto {
 
     public CustomerDto setCustomerCommentList(List<CustomerCommentDto> customerCommentList) {
         this.customerCommentList = customerCommentList;
+        return this;
+    }
+
+    @Override
+    public CustomerDto setId(Integer id) {
+        super.setId(id);
         return this;
     }
 
