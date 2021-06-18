@@ -10,16 +10,19 @@ public class ServiceCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "service_category_unique_name")
     private String name;
 
-    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory" , fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "serviceCategory", fetch = FetchType.LAZY)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubCategory> subCategoryList = new ArrayList<>();
 
-    @OneToMany(orphanRemoval = true , cascade = CascadeType.PERSIST , mappedBy = "serviceCategory")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "serviceCategory", fetch = FetchType.LAZY)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "serviceCategoryList", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Specialist> specialistList = new ArrayList<>();
 
     public ServiceCategory(String name) {
