@@ -101,17 +101,16 @@ public class SpecialistController {
 
     }
     @GetMapping("/changePass")
-    public String changePass(){
-        return "specialistChangePass";
+    public ModelAndView changePass(){
+        return new ModelAndView("specialistChangePass","changePass",new ChangePassDto());
     }
     @PostMapping("/change")
-    public ModelAndView change(@RequestParam(value = "old", required = true) String old,
-                               @RequestParam(value = "new", required = true) String newPass,
+    public ModelAndView change(@ModelAttribute("changePass")ChangePassDto changePassDto,
                                 @SessionAttribute("mySpecialistDto") SpecialistDto specialistDto) throws Exception {
         logger.info("...specialist change password...");
         Map<String , String > message = new HashMap<>();
-        if (specialistDto.getPassword().equals(old)){
-            specialistDto.setPassword(newPass);
+        if (specialistDto.getPassword().equals(changePassDto.getOldPass())){
+            specialistDto.setPassword(changePassDto.getNewPass());
             specialistService.update(specialistDto);
             message.put("message","Password successfully changed");
         }
