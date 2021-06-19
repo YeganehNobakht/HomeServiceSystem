@@ -7,6 +7,7 @@ import ir.maktab.service.customerOrderService.CustomerOrderService;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.specialistService.SpecialistService;
 import ir.maktab.service.suggestionService.SuggestionService;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/specialist")
 public class SpecialistController {
+    private final Logger logger = Logger.getLogger(SpecialistController.class);
     private final SpecialistService specialistService;
     private final CustomerOrderService customerOrderService;
     private final ServiceCategoryService serviceCategoryService;
@@ -37,13 +39,14 @@ public class SpecialistController {
     }
     @GetMapping("/login")
     public ModelAndView login(){
+        logger.info("...specialist login page...");
         return new ModelAndView("specialistLogin","specialistDto", new SpecialistDto());
     }
     @PostMapping("/register")
     public String register(@ModelAttribute("specialistDto") SpecialistDto specialistDto,
                            BindingResult bindingResult, Model model,
                            HttpServletRequest request) throws Exception {
-
+        logger.info("...specialist registered...");
         if (bindingResult.hasErrors())
             return "specialistLogin";
 
@@ -56,6 +59,7 @@ public class SpecialistController {
 
     @GetMapping("/signUp")
     public ModelAndView signUp(HttpServletRequest request){
+        logger.info("...specialist sign up page...");
         HttpSession session = request.getSession(true);
         List<ServiceCategoryDto> allServices = serviceCategoryService.getAll();
         session.setAttribute("allServices",allServices);
@@ -66,6 +70,7 @@ public class SpecialistController {
     public String registerSignUp(@ModelAttribute("specialistDto")SpecialistSignUpDto specialistDto,
                                  BindingResult bindingResult,
                                  HttpServletRequest request) throws Exception {
+        logger.info("...specialist register from sign up page...");
         if (bindingResult.hasErrors())
             return "specialistSignUp";
         HttpSession session = request.getSession(true);
@@ -80,6 +85,7 @@ public class SpecialistController {
 
     @GetMapping("/showOrder")
     public ModelAndView showOrder( @SessionAttribute("mySpecialistDto") SpecialistDto specialistDto ) throws Exception {
+        logger.info("...show all unselected order for specialist...");
         List<ServiceCategoryDto> serviceCategoryDtoList = specialistDto.getServiceCategoryList();
         Set<CustomerOrderDto> orderDtoList = new HashSet<>();
         Map<String , Object>  orderMap = new HashMap<>();
@@ -102,7 +108,7 @@ public class SpecialistController {
     public ModelAndView change(@RequestParam(value = "old", required = true) String old,
                                @RequestParam(value = "new", required = true) String newPass,
                                 @SessionAttribute("mySpecialistDto") SpecialistDto specialistDto) throws Exception {
-
+        logger.info("...specialist change password...");
         Map<String , String > message = new HashMap<>();
         if (specialistDto.getPassword().equals(old)){
             specialistDto.setPassword(newPass);
@@ -110,6 +116,7 @@ public class SpecialistController {
             message.put("message","Password successfully changed");
         }
         else
+            logger.warn("...old pass does not match...");
             message.put("message","Old password is incorrect");
 
         return new ModelAndView("specialistChangePass",message);
@@ -117,12 +124,14 @@ public class SpecialistController {
 
     @GetMapping("/showAllOrders")
     public String showAllOrders(){
+        logger.info("...current and completed orders...");
         return "specialistShowAllOrders";
     }
 
     @GetMapping("/currentOrder")
     public String currentOrder(@SessionAttribute("mySpecialistDto")SpecialistDto specialistDto,
                                HttpServletRequest request,Model model) throws Exception {
+        logger.info("...current orders...");
         List<SuggestionDto> suggestionDtoList = suggestionService.findUserBySuggestionStatusAndSpecialist(SuggestionStatus.ACCEPTED, specialistDto.getId());
         HttpSession session = request.getSession(true);
         session.setAttribute("suggestionList",suggestionDtoList);
@@ -136,7 +145,7 @@ public class SpecialistController {
     public String findOrder(@PathVariable(value = "orderId") Integer orderId,
                             @SessionAttribute("suggestionList")List<SuggestionDto> suggestionDtoList,
                             Model model, HttpServletRequest request) throws Exception {
-
+        logger.info("...change status of an order which selected...");
         List<SuggestionDto> suggestionDto = suggestionDtoList.stream().filter(s -> s.getCustomerOrder().getId().equals(orderId)).collect(Collectors.toList());
         if (suggestionDto.get(0).getCustomerOrder().getOrderStatus().equals(OrderStatus.WAITING_FOR_SPECIALIST_CHOSE)) {
             customerOrderService.updateOrderStatus(suggestionDto.get(0).getCustomerOrder().setOrderStatus(OrderStatus.WAITING_FOR_SPECIALIST_COME));
@@ -167,6 +176,7 @@ public class SpecialistController {
 
     @GetMapping("/completeOrder")
     public String showCompleteOrder(@SessionAttribute("mySpecialistDto") SpecialistDto specialistDto,Model model){
+        logger.info("...chane status of completed orders...");
         List<SuggestionDto> suggestionDtos = suggestionService.findUserBySuggestionStatusAndSpecialist(SuggestionStatus.DONE, specialistDto.getId());
         List<CustomerOrderDto> orderDto = suggestionDtos.stream().map(SuggestionDto::getCustomerOrder).collect(Collectors.toList());
         model.addAttribute("orderDto",orderDto);

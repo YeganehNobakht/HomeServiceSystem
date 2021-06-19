@@ -6,6 +6,7 @@ import ir.maktab.dto.CustomerOrderDto;
 import ir.maktab.dto.PaymentDto;
 import ir.maktab.service.customerOrderService.CustomerOrderService;
 import ir.maktab.service.customerService.CustomerService;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
-
+    private final Logger logger = Logger.getLogger(PaymentController.class);
     private final CustomerOrderService customerOrderService;
     private final CustomerService customerService;
 
@@ -31,13 +32,16 @@ public class PaymentController {
 
     @GetMapping("/byCard")
     public ModelAndView payByCard(Model model){
+        logger.info("...payment by card...");
         return new ModelAndView("payment","paymentDto",new PaymentDto());
     }
 
     @GetMapping("/byBalance")
     public String payByAccount(@SessionAttribute("myCustomerDto") CustomerDto customerDto,
                                @SessionAttribute("price") double price,Model model){
+        logger.info("...payment by account balance...");
         if (customerDto.getBalance()<price){
+            logger.warn("...low balance...");
             model.addAttribute("message","Your account balance is too low.");
             return "customerPaymentInformations";
         }
@@ -52,6 +56,7 @@ public class PaymentController {
                      @SessionAttribute("myCustomerDto") CustomerDto customerDto,
                      HttpSession session, HttpServletRequest request,
                        Model model) throws Exception {
+      logger.info("...complete payment transaction...");
         String captcha = session.getAttribute("captcha_security").toString();
         String verifyCaptcha = request.getParameter("captcha");
         if (captcha.equals(verifyCaptcha)) {
@@ -71,6 +76,7 @@ public class PaymentController {
 
     @GetMapping("/timeout")
     public String redirect(){
+        logger.warn("...payment timeout...");
         return "timeOut";
     }
 }

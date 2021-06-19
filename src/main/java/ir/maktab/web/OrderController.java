@@ -4,6 +4,7 @@ import ir.maktab.dto.*;
 import ir.maktab.service.customerOrderService.CustomerOrderService;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.subCategoryService.SubCategoryService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ import java.util.Map;
 @RequestMapping("/order")
 @SessionAttributes("newOrder")
 public class OrderController {
-
+    private final Logger logger = Logger.getLogger(OrderController.class);
     private final ServiceCategoryService categoryService;
     private final CustomerOrderService customerOrderService;
     private final SubCategoryService subCategoryService;
@@ -40,22 +41,10 @@ public class OrderController {
         this.subCategoryService = subCategoryService;
     }
 
-//    @GetMapping("/showOrder")
-//    public ModelAndView showOrder(){
-//        List<ServiceCategoryDto> all = categoryService.getAll();
-//        Map<String, Object> model = new HashMap<>();
-//        for (ServiceCategoryDto service:all){
-//            model.put(service.getName(),service.getSubCategoryList());
-//        }
-//
-//        model.put("services",all);
-//        return new ModelAndView("showOrder",model);
-//
-//    }
-
     @GetMapping("/show")
     public String createOrder(@SessionAttribute("myCustomerDto")CustomerDto customerDto, Model model, HttpServletRequest request) throws Exception {
 
+        logger.info("...add an order...");
         if (customerOrderService.findByCustomer(customerDto).size() == 0) {
             List<ServiceCategoryDto> all = categoryService.getAll();
 
@@ -68,6 +57,7 @@ public class OrderController {
             return "showOrder";
         }
         else {
+            logger.warn("...unfinished order...");
             model.addAttribute("success", "You already have an active order");
             return "success";
         }
@@ -82,16 +72,9 @@ public class OrderController {
     @PostMapping("/add")
     public ModelAndView addOrder(@ModelAttribute("newOrder")
                                      @Valid OrderDto orderDto,
-//            @RequestParam(value = "service", required = true) String service,
-//            @RequestParam(value = "subCategory", required = true) String subCategory,
-//            @RequestParam(value = "jobDescription", required = false) String jobDescription,
-//            @RequestParam(value = "workDate", required = false)@DateTimeFormat(pattern = "yyyy-MM-dd") Date workDate,
-//            @RequestParam(value = "city", required = false) String city,
-//            @RequestParam(value = "street", required = false) String street,
-//            @RequestParam(value = "alley", required = false) String alley,
             @SessionAttribute("myCustomerDto") CustomerDto customerDto,
             HttpServletRequest request) throws Exception {
-
+        logger.info("...create an order...");
         orderDto.setCustomerDto(customerDto);
         customerOrderService.addOrder(orderDto);
         Map<String, String> successMsg = new HashMap<>();

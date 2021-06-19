@@ -6,6 +6,7 @@ import ir.maktab.dto.ServiceCategoryDto;
 import ir.maktab.dto.SubCategoryDto;
 import ir.maktab.service.serviceCategory.ServiceCategoryService;
 import ir.maktab.service.subCategoryService.SubCategoryService;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/sub")
 public class SubCategoryController {
+    private final Logger logger = Logger.getLogger(SubCategoryController.class);
     private final SubCategoryService subCategoryService;
     private final ServiceCategoryService serviceCategoryService;
 
@@ -30,7 +32,7 @@ public class SubCategoryController {
     public String getSubServices(@RequestParam("service") String service, Model model,
                                  @SessionAttribute("serviceList") List<ServiceCategoryDto> serviceList
             , @SessionAttribute("newOrder") OrderDto orderDto) {
-
+        logger.info("...showing all sub-services...");
         List<String> subCategory = subCategoryService.getByServiceName(service);
         model.addAttribute("newOrder", orderDto);
         model.addAttribute("subServiceList", subCategory);
@@ -41,6 +43,7 @@ public class SubCategoryController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute("subServiceDto")SubCategoryDto subCategoryDto, Model model) throws Exception {
+        logger.info("...adding a new sub-service to a service...");
         ServiceCategoryDto service = serviceCategoryService.getByName(subCategoryDto.getServiceCategory().getName());
         subCategoryDto.setServiceCategory(service);
         subCategoryService.sava(subCategoryDto);
