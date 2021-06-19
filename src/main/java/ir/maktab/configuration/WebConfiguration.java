@@ -33,13 +33,13 @@ public class WebConfiguration implements WebMvcConfigurer {
 //
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-       // registry.addInterceptor(localeChangeInterceptor()) ;
+        registry.addInterceptor(localeChangeInterceptor()) ;
         registry.addInterceptor(new LastViewInterceptor());
     }
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        return new LocaleChangeInterceptor();
-//    }
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        return new LocaleChangeInterceptor();
+    }
 //
 //    @Bean
 //    public FixedLocaleResolver fixedLocaleResolver(){
