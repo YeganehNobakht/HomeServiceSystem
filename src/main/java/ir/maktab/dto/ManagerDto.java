@@ -1,7 +1,15 @@
 package ir.maktab.dto;
 
+import ir.maktab.service.validation.ValidPassword;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class ManagerDto {
+    @NotBlank(message = "userName")
+    @Size(min = 8, max = 12, message = "manager.userName")
     private String username;
+    @ValidPassword
     private String password;
 
     public String getUsername() {

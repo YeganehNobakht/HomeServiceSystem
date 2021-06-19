@@ -1,6 +1,7 @@
 package ir.maktab.dto;
 
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class ServiceCategoryDto {
 
     private Integer id;
-
+    @NotBlank(message = "name")
     private String name;
 
     private List<SubCategoryDto> subCategoryList = new ArrayList<>();

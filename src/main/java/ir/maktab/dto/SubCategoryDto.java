@@ -1,12 +1,13 @@
 package ir.maktab.dto;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SubCategoryDto {
 
     private Integer id;
-
+    @NotBlank(message = "name")
     private String name;
 
     private ServiceCategoryDto serviceCategory;

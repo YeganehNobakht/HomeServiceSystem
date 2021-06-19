@@ -1,16 +1,29 @@
 package ir.maktab.dto;
 
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * @author Yeganeh Nobakht
  **/
 public class PaymentDto {
+    @NotBlank(message = "card.number.blank")
+    @Pattern(regexp = "[1-9][0-9]{15}",message = "card.number")
     private BigDecimal cardNumber;
+    @NotBlank(message = "cvv2.blank")
+    @Pattern(regexp = "[0-9]{4}",message = "cvv2")
     private String ccv2;
+    @NotBlank(message = "month.blank")
+    @Size(min = 1, max = 12, message = "month.size")
     private Integer cardExpirationMonth;
+    @NotBlank(message = "year.blank")
+    @Size(min = 0, max = 99, message = "year.size")
     private Integer cardExpirationYear;
+    @NotBlank(message = "card.pass.blank")
+    @Pattern(regexp = "[0-9]{4}",message = "card.pass")
     private Integer dynamicPassword;
     private String email;
     private String captcha;

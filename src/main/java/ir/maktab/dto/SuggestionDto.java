@@ -3,13 +3,16 @@ package ir.maktab.dto;
 import ir.maktab.data.entity.enums.SuggestionStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class SuggestionDto {
 
     private Integer id;
+    @NotNull(message = "suggestion.price")
     private Double price;
     private String workDescription;
+    @NotNull(message = "suggestion.work.duration")
     private Integer durationOfWork;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;

@@ -1,10 +1,12 @@
 package ir.maktab.dto;
 
+import javax.validation.constraints.Size;
+
 public class CustomerCommentDto {
     private Integer id;
 
     private String comment;
-
+    @Size(min = 5, max = 40, message = "rate.size")
     private Double score;
 
     private CustomerDto customerDto;

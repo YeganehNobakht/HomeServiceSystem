@@ -1,8 +1,13 @@
 package ir.maktab.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class AddressDto {
+    @NotBlank(message = "city.not.blank")
     private String city;
+    @NotBlank(message = "street.not.blank")
     private String street;
+    @NotBlank(message = "alley.not.blank")
     private String alley;
 
     public String getCity() {
