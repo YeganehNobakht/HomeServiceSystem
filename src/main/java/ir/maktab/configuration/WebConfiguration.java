@@ -40,15 +40,15 @@ public class WebConfiguration implements WebMvcConfigurer {
     public LocaleChangeInterceptor localeChangeInterceptor() {
         return new LocaleChangeInterceptor();
     }
-//
-//    @Bean
-//    public FixedLocaleResolver fixedLocaleResolver(){
-//        Locale.setDefault(Locale.forLanguageTag("fa_ir"));
-//        FixedLocaleResolver fixedLocaleResolver= new FixedLocaleResolver();
-//        fixedLocaleResolver.setDefaultLocale(Locale.forLanguageTag("fa_ir"));
-//        return fixedLocaleResolver;
-//
-//    }
+
+    @Bean
+    public FixedLocaleResolver fixedLocaleResolver(){
+        Locale.setDefault(Locale.forLanguageTag("en_us"));
+        FixedLocaleResolver fixedLocaleResolver= new FixedLocaleResolver();
+        fixedLocaleResolver.setDefaultLocale(Locale.forLanguageTag("en_us"));
+        return fixedLocaleResolver;
+
+    }
 
     @Bean
     public InternalResourceViewResolver viewResolver() {
