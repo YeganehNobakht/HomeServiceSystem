@@ -2,6 +2,7 @@ package ir.maktab.web;
 
 import ir.maktab.data.entity.enums.OrderStatus;
 import ir.maktab.data.entity.enums.SuggestionStatus;
+import ir.maktab.dto.ChangePassDto;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.CustomerOrderDto;
 import ir.maktab.dto.SuggestionDto;
@@ -75,20 +76,19 @@ public class CustomerController {
     }
 
     @GetMapping("/changePass")
-    public String changePass() {
+    public ModelAndView changePass() {
         logger.info("...redirect to customer change password page...");
-        return "customerChangePass";
+        return new ModelAndView("customerChangePass","changePass",new ChangePassDto());
     }
 
     @PostMapping("/change")
-    public ModelAndView change(@RequestParam(value = "old", required = true) String old,
-                               @RequestParam(value = "new", required = true) String newPass,
+    public ModelAndView change(@ModelAttribute("changePass") ChangePassDto changePassDto,
                                @SessionAttribute("myCustomerDto") CustomerDto customerDto) throws Exception {
 
         logger.info("...changing customer password process...");
         Map<String, String> message = new HashMap<>();
-        if (customerDto.getPassword().equals(old)) {
-            customerDto.setPassword(newPass);
+        if (customerDto.getPassword().equals(changePassDto.getOldPass())) {
+            customerDto.setPassword(changePassDto.getNewPass());
             customerService.update(customerDto);
             message.put("message", "Password successfully changed");
         } else{
