@@ -1,5 +1,6 @@
 package ir.maktab.web;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.awt.Color;
@@ -18,9 +19,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/captcha")
 public class CaptchaController {
+    private static final Logger logger = Logger.getLogger(CaptchaController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("....creating captcha....");
         response.setContentType("image/jpg");
         int iTotalChars = 6;
         int iHeight = 40;
