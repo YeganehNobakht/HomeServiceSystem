@@ -3,6 +3,7 @@ package ir.maktab.dto;
 import ir.maktab.data.entity.enums.OrderStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -10,13 +11,20 @@ import java.util.Date;
  **/
 
 public class OrderDto {
+    @NotBlank(message = "blank")
     private String serviceCategory;
+    @NotBlank(message = "blank")
     private String  subCategory;
+
     private String jobDescription;
+    @NotBlank(message = "blank")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date workDate;
+    @NotBlank(message = "city.not.blank")
     private String city;
+    @NotBlank(message = "street.not.blank")
     private String street;
+    @NotBlank(message = "alley.not.blank")
     private String alley;
     private CustomerDto customerDto;
 
