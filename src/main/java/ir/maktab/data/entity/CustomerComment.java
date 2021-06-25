@@ -10,14 +10,17 @@ public class CustomerComment {
     private String comment;
     private Double score;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_comment", nullable = false, foreignKey = @ForeignKey(name = "customer_comment_fk"))
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialist_comment", nullable = false, foreignKey = @ForeignKey(name = "specialist_comment_fk"))
     private Specialist specialist;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private CustomerOrder customerOrder;
 
     public Integer getId() {
         return id;
@@ -61,6 +64,15 @@ public class CustomerComment {
 
     public CustomerComment setSpecialist(Specialist specialist) {
         this.specialist = specialist;
+        return this;
+    }
+
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
+    }
+
+    public CustomerComment setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
         return this;
     }
 }
