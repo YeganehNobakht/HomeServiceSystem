@@ -57,7 +57,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
                 </li>
 
@@ -94,25 +94,34 @@
 
     </div>
     <div class="m11">
-        <h4 class="text-info d-flex justify-content-center">${message}</h4>
+        <h5 class="text-info d-flex justify-content-center text-info">${message}</h5>
+        <h5 class="text-info d-flex justify-content-center text-danger">${error}</h5>
         <br>
         <div class="d-flex justify-content-center align-items-center bgc ">
-            <form name="passForm" cssClass="p-3 m-3" cssStyle="" method="post" action="/customer/change">
+            <form:form modelAttribute="changePass" name="passForm" cssClass="p-3 m-3" cssStyle="" method="post" action="/customer/change">
                 <table class="table table-striped text-black">
                     <tr>
-                        <td><label for="old">Old Password</label></td>
-                        <td><input id="old" name="old"></td>
+                        <td><form:label path="oldPass" for="old">Old Password</form:label></td>
+                        <td><form:input path="oldPass" id="old" name="old" resource="true"/></td>
                     </tr>
                     <tr>
-                        <td><label for="new">New Password</label></td>
-                        <td><input id="new" name="new"></td>
+                        <td></td>
+                        <td><p  class="text-danger">${oldPass}</td>
+                    </tr>
+                    <tr>
+                        <td><form:label path="newPass" for="new">New Password</form:label></td>
+                        <td><form:input path="newPass" id="new" name="new"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <t<td><p  class="text-danger">${newPaa}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td><button name="change">Change</button></td>
                     </tr>
                 </table>
-            </form>
+            </form:form>
 
         </div>
     </div>
