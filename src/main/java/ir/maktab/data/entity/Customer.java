@@ -4,7 +4,9 @@ import ir.maktab.data.entity.enums.UserStatus;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,8 +49,8 @@ public class Customer extends User {
 
     @Override
     public Customer setId(Integer id) {
-         super.setId(id);
-         return this;
+        super.setId(id);
+        return this;
     }
 
     @Override
@@ -94,7 +96,7 @@ public class Customer extends User {
     }
 
     @Override
-    public Customer setBalance(Double balance) {
+    public Customer setBalance(double balance) {
         super.setBalance(balance);
         return this;
     }
